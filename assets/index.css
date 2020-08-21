@@ -1,0 +1,18 @@
+*, *:after, *:before {
+    font-family: "Microsoft JhengHei", monospace;
+    transition-duration: .5s;
+}
+
+
+.fill-height {
+    position: absolute;
+    top: 0; /* Header Height */
+    bottom: 0; /* Footer Height */
+    width: 25%;
+}
+
+@media only screen and (max-width: 800px) {
+    .fill-height {
+        width: 100%;
+    }
+}

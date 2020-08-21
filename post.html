@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud-Heaven Utopia</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-with, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Test Website">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css"
+            integrity="sha384-2PJ2u4NYg6jCNNpv3i1hK9AoAqODy6CdiC+gYiL2DVx+ku5wzJMFNdE3RoWfBIRP"
+            crossorigin="anonymous"
+    />
+    <link type="text/css" rel="stylesheet" href="assets/index.css">
+</head>
+
+<body class="mdui-appbar-with-toolbar">
+<div class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide">
+    <div class="mdui-toolbar mdui-color-theme">
+        <a href="utopia.html" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">arrow_back</i></a>
+        <span class="mdui-typo-title">返回上一頁</span>
+        <div class="mdui-toolbar-spacer"></div>
+        <a onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">keyboard_arrow_up</i></a>
+    </div>
+</div>
+<div class="mdui-container-fluid mdui-p-a-4">
+    <div class="mdui-card">
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title">
+                <span id="title">加載標題中..</span>
+            </div>
+            <div class="mdui-card-primary-subtitle">
+                <span id="subtitle">加載副標題中...</span>
+            </div>
+        </div>
+        <div class="mdui-card-content">
+            <div id="content">
+                <div class="mdui-spinner mdui-spinner-colorful"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script
+        src="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"
+        integrity="sha384-aB8rnkAu/GBsQ1q6dwTySnlrrbhqDwrDnpVHR2Wgm8pWLbwUnzDcIROX3VvCbaK+"
+        crossorigin="anonymous"
+></script>
+<script type="text/javascript" src="./assets/js/index.js" ></script>
+<script type="text/javascript" src="./assets/js/utopia/post.js"></script>
+</html>

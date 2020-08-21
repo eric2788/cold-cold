@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud-Heaven Utopia</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-with, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Test Website">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css"
+            integrity="sha384-2PJ2u4NYg6jCNNpv3i1hK9AoAqODy6CdiC+gYiL2DVx+ku5wzJMFNdE3RoWfBIRP"
+            crossorigin="anonymous"
+    />
+    <link type="text/css" rel="stylesheet" href="assets/index.css" >
+</head>
+
+<body class="mdui-drawer-body-left">
+
+    <div class="mdui-appbar mdui-appbar-inset">
+        <div class="mdui-toolbar mdui-color-theme-700">
+            <a id="toggle-drawer" class="mdui-btn mdui-btn-icon">
+                <i class="mdui-icon material-icons">menu</i>
+            </a>
+            <span class="mdui-typo-title">Cloud Heaven Server</span>
+            <div class="mdui-toolbar-spacer"></div>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon">
+                <i class="mdui-icon material-icons">search</i>
+            </a>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon">
+                <i class="mdui-icon material-icons">refresh</i>
+            </a>
+        </div>
+    </div>
+
+    <div class="mdui-drawer mdui-color-theme-50" id="drawer">
+        <ul class="mdui-list" id="nav">
+            <div class="mdui-p-l-1 mdui-p-r-1">
+                <h3>導航</h3>
+            </div>
+            <li class="mdui-divider"></li>
+            <a class="mdui-list-item mdui-ripple" id="news">
+                <i class="mdui-list-item-icon mdui-icon material-icons">announcement</i>
+                <div class="mdui-list-item-content">最新消息</div>
+            </a>
+            <li class="mdui-subheader">功能</li>
+            <a class="mdui-list-item mdui-ripple" id="chat">
+                <i class="mdui-list-item-icon mdui-icon material-icons">chat</i>
+                <div class="mdui-list-item-content">伺服器聊天</div>
+            </a>
+            <a class="mdui-list-item mdui-ripple" id="player-list">
+                <i class="mdui-list-item-icon mdui-icon material-icons">people</i>
+                <div class="mdui-list-item-content">伺服器玩家列表</div>
+            </a>
+            <li class="mdui-subheader">介紹</li>
+            <a class="mdui-list-item mdui-ripple" href="https://hackmd.io/@MWMServer/MWMwiki">
+                <i class="mdui-list-item-icon mdui-icon material-icons">library_books</i>
+                <div class="mdui-list-item-content">WIKI</div>
+            </a>
+            <a class="mdui-list-item mdui-ripple" id="intro">
+                <i class="mdui-list-item-icon mdui-icon material-icons">extension</i>
+                <div class="mdui-list-item-content">伺服器簡介</div>
+            </a>
+            <a class="mdui-list-item mdui-ripple" id="rule">
+                <i class="mdui-list-item-icon mdui-icon material-icons">verified_user</i>
+                <div class="mdui-list-item-content">伺服器規章</div>
+            </a>
+            <li class="mdui-subheader">設定</li>
+            <a class="mdui-list-item mdui-ripple" id="account">
+                <i class="mdui-list-item-icon mdui-icon material-icons">account_box</i>
+                <div class="mdui-list-item-content">個人資訊</div>
+            </a>
+            <li class="mdui-subheader">關於伺服器</li>
+            <a class="mdui-list-item mdui-ripple" id="about">
+                <i class="mdui-list-item-icon mdui-icon material-icons">people</i>
+                <div class="mdui-list-item-content">關於我們</div>
+            </a>
+            <li class="mdui-subheader">關於作者</li>
+            <a class="mdui-list-item mdui-ripple" href="https://github.com/eric2788">
+                <div class="mdui-list-item-avatar">
+                    <img alt="icon" src="https://avatars1.githubusercontent.com/u/6276840?s=460&amp;v=4"/></div>
+                <div class="mdui-list-item-content">
+                    <div class="mdui-list-item-title">Eric Lam</div>
+                    <div class="mdui-list-item-text mdui-list-item-one-line">
+                        <span class="mdui-text-color-theme-text">前端新手</span>
+                    </div>
+                </div>
+            </a>
+        </ul>
+    </div>
+    <div class="mdui-container mdui-p-a-3">
+        <div id="heaven">
+            <div class="mdui-progress">
+                <div class="mdui-progress-indeterminate mdui-color-theme-700"></div>
+            </div>
+        </div>
+    </div>
+    <div class="mdui-fab-wrapper" id="fab" mdui-fab="{trigger: 'hover'}">
+        <button class="mdui-fab mdui-ripple mdui-color-theme">
+            <i class="mdui-icon material-icons">brush</i>
+            <i class="mdui-icon mdui-fab-opened material-icons">border_color</i>
+        </button>
+        <div class="mdui-fab-dial" id="change-color">
+            <button id="pink" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink"><i class="mdui-icon material-icons">brush</i>
+            </button>
+            <button id="red" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red"><i class="mdui-icon material-icons">brush</i>
+            </button>
+            <button id="orange" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange"><i class="mdui-icon material-icons">brush</i>
+            </button>
+            <button id="blue" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i class="mdui-icon material-icons">brush</i>
+            </button>
+        </div>
+    </div>
+</body>
+<script
+        src="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"
+        integrity="sha384-aB8rnkAu/GBsQ1q6dwTySnlrrbhqDwrDnpVHR2Wgm8pWLbwUnzDcIROX3VvCbaK+"
+        crossorigin="anonymous"
+></script>
+<script type="text/javascript" src="./assets/js/index.js" ></script>
+<script type="text/javascript" src="./assets/js/mojang-auth.js"></script>
+<script type="text/javascript" src="./assets/js/utopia/page-manager.js"></script>
+<script type="text/javascript" src="./assets/js/utopia/index.js" ></script>
+</html>

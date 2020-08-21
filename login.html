@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Heaven Login</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-with, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Test Website">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css"
+            integrity="sha384-2PJ2u4NYg6jCNNpv3i1hK9AoAqODy6CdiC+gYiL2DVx+ku5wzJMFNdE3RoWfBIRP"
+            crossorigin="anonymous"
+    />
+    <link type="text/css" rel="stylesheet" href="assets/index.css" >
+</head>
+<body class="sky-bg">
+    <div class="mdui-container-fluid mdui-p-a-0" style="align-items: end">
+        <div class="mdui-col-offset-md-9">
+            <div class="mdui-card fill-height" style="opacity: 0.8">
+
+                <div class="mdui-card-primary">
+                    <div class="mdui-card-primary-subtitle">登入 Cloud Heaven</div>
+                </div>
+
+                <div class="mdui-card-content mdui-p-a-5" style="bottom: -20%">
+                    <div id="alert"></div>
+                    <h3>以 Mojang 賬戶 登入</h3>
+                    <form id="login">
+                        <div class="mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">用戶名稱或電郵</label>
+                            <input class="mdui-textfield-input" name="username" type="text"/>
+                        </div>
+                        <div class="mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">密碼</label>
+                            <input class="mdui-textfield-input" name="password" type="password" id="password-input"/>
+                        </div>
+                    </form>
+                    <button id="loginBtn" class="mdui-btn mdui-color-theme-100 mdui-btn-raised " style="float: right">登入</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+<script
+        src="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"
+        integrity="sha384-aB8rnkAu/GBsQ1q6dwTySnlrrbhqDwrDnpVHR2Wgm8pWLbwUnzDcIROX3VvCbaK+"
+        crossorigin="anonymous"
+></script>
+<script type="text/javascript" src="./assets/js/index.js" ></script>
+<script type="text/javascript" src="./assets/js/mojang-auth.js"></script>
+<script type="text/javascript" src="./assets/js/login.js"></script>
+<style>
+    .sky-bg {
+        background-image: url('https://pics.freeartbackgrounds.com/Blue_Sky_Background-1512.jpg');
+        background-repeat: no-repeat;
+        background-size: auto auto;
+    }
+</style>
+</html>
