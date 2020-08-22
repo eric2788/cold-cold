@@ -1,6 +1,6 @@
 'use strict';
 
-if (window.sessionStorage.getItem('el.mojang.token') === null) {
+if (sessionManager.token === undefined) {
     document.location.href = homeUrl.concat('login.html')
 }
 
@@ -35,4 +35,29 @@ $("#change-color").children('button').each((_, ele) => {
     }
     ele.addEventListener('click', () => setTheme(color))
 })
+
+function logout(){
+    const token = sessionManager.token
+    if (token === undefined){
+        console.warn('unknown token, back to login')
+        window.location.href = homeUrl.concat('/login.html')
+        return
+    }
+    const logoutBtn = $("#logout-btn")
+    if (isLoading(logoutBtn)){
+        return;
+    }
+    setLoading(logoutBtn, true)
+    signOut(token).then(({_, xhr}) => {
+        console.debug(`status response: ${xhr.status}`)
+        console.debug('logout successful')
+        sessionManager.remove()
+        window.location.href = homeUrl.concat('/login.html')
+    }).catch(xhr => {
+        console.error(xhr)
+    }).finally(() => {
+        setLoading(logoutBtn, false)
+    })
+
+}
 

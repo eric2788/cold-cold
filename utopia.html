@@ -16,9 +16,9 @@
     <link type="text/css" rel="stylesheet" href="assets/index.css" >
 </head>
 
-<body class="mdui-drawer-body-left">
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar">
 
-    <div class="mdui-appbar mdui-appbar-inset">
+    <div class="mdui-appbar mdui-appbar-fixed">
         <div class="mdui-toolbar mdui-color-theme-700">
             <a id="toggle-drawer" class="mdui-btn mdui-btn-icon">
                 <i class="mdui-icon material-icons">menu</i>
@@ -28,18 +28,14 @@
             <a href="javascript:;" class="mdui-btn mdui-btn-icon">
                 <i class="mdui-icon material-icons">search</i>
             </a>
-            <a href="javascript:;" class="mdui-btn mdui-btn-icon">
-                <i class="mdui-icon material-icons">refresh</i>
+            <a href="javascript:;" class="mdui-btn" onclick="logout()" id="logout-btn">
+                登出
             </a>
         </div>
     </div>
 
-    <div class="mdui-drawer mdui-color-theme-50" id="drawer">
+    <div class="mdui-drawer" id="drawer">
         <ul class="mdui-list" id="nav">
-            <div class="mdui-p-l-1 mdui-p-r-1">
-                <h3>導航</h3>
-            </div>
-            <li class="mdui-divider"></li>
             <a class="mdui-list-item mdui-ripple" id="news">
                 <i class="mdui-list-item-icon mdui-icon material-icons">announcement</i>
                 <div class="mdui-list-item-content">最新消息</div>
@@ -106,9 +102,9 @@
             </button>
             <button id="red" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red"><i class="mdui-icon material-icons">brush</i>
             </button>
-            <button id="orange" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange"><i class="mdui-icon material-icons">brush</i>
+            <button id="purple" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-purple"><i class="mdui-icon material-icons">brush</i>
             </button>
-            <button id="blue" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i class="mdui-icon material-icons">brush</i>
+            <button id="teal" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-teal"><i class="mdui-icon material-icons">brush</i>
             </button>
         </div>
     </div>
@@ -119,7 +115,7 @@
         crossorigin="anonymous"
 ></script>
 <script type="text/javascript" src="./assets/js/index.js" ></script>
-<script type="text/javascript" src="./assets/js/mojang-auth.js"></script>
+<script type="text/javascript" src="assets/js/server-api.js"></script>
 <script type="text/javascript" src="./assets/js/utopia/page-manager.js"></script>
 <script type="text/javascript" src="./assets/js/utopia/index.js" ></script>
 </html>

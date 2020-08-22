@@ -1,6 +1,6 @@
 'use strict';
 
-if (window.sessionStorage.getItem('el.mojang.token') !== null) {
+if (sessionManager.token !== undefined) {
     document.location.href = homeUrl.concat('utopia.html')
 }
 
@@ -17,15 +17,23 @@ function submit(e) {
         return
     }
     setLoading(btn, true)
-    login(username, pw).then( res => {
+    login(username, pw).then( ({res, _}) => {
+        const {userName, nickName, admin} = res.user
+        sessionManager.token = res.token
+        alert(`welcome ${userName}(${nickName}), admin: ${admin}`)
         document.location.href = homeUrl.concat('utopia.html')
     }).catch(err => {
-        console.warn(err)
-        $('#alert').replaceWith(' <div id="alert" class="mdui-card mdui-color-red-200 mdui-text-color-white">\n' +
-            '                            <div class="mdui-card-content">\n' +
-            '                                \n' + err +
-            '                            </div>\n' +
-            '                        </div>')
+        if (err.response){
+            console.warn(err.response)
+            const res = JSON.parse(err.response)
+            $('#alert').replaceWith(' <div id="alert" class="mdui-card mdui-color-red-200 mdui-text-color-white">\n' +
+                '                            <div class="mdui-card-content">\n' +
+                '                                \n' + res.errorMessage +
+                '                            </div>\n' +
+                '                        </div>')
+        }else{
+            console.warn(err)
+        }
     }).finally(() => {
         setLoading(btn, false)
     })
