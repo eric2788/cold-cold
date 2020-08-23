@@ -1,7 +1,21 @@
 'use strict';
 
 if (sessionManager.token !== undefined) {
-    document.location.href = homeUrl.concat('utopia.html')
+    validate(sessionManager.token).then(({res, xhr})=>{
+        if (xhr.status === 200){
+            document.location.href = homeUrl.concat('utopia.html')
+        }else{
+            console.warn(res)
+            console.warn(xhr)
+        }
+    }).catch(err =>{
+        if (err.response){
+            console.warn(err.response)
+        }else{
+            console.error(err)
+            mdui.snackbar(err).open()
+        }
+    })
 }
 
 const btn = $('#loginBtn')
@@ -18,21 +32,16 @@ function submit(e) {
     }
     setLoading(btn, true)
     login(username, pw).then( ({res, _}) => {
-        const {userName, nickName, admin} = res.user
-        sessionManager.token = res.token
-        alert(`welcome ${userName}(${nickName}), admin: ${admin}`)
+        sessionManager.token = res
         document.location.href = homeUrl.concat('utopia.html')
     }).catch(err => {
         if (err.response){
             console.warn(err.response)
             const res = JSON.parse(err.response)
-            $('#alert').replaceWith(' <div id="alert" class="mdui-card mdui-color-red-200 mdui-text-color-white">\n' +
-                '                            <div class="mdui-card-content">\n' +
-                '                                \n' + res.errorMessage +
-                '                            </div>\n' +
-                '                        </div>')
+            $('#alert').replaceWith(alertNode(res))
         }else{
             console.warn(err)
+            mdui.snackbar(err || 'ERROR').open()
         }
     }).finally(() => {
         setLoading(btn, false)

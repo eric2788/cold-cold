@@ -10,16 +10,7 @@ input.on('keydown', e => {
             console.debug('empty string, skipped')
             return
         }
-        const node = `
-              <li class="mdui-list-item">
-                 User3(you): ${e.target.value}
-              </li>
-            `
-        const chatList = $('#chat-list')
-        chatList.append(node)
-        const l = document.getElementById('scrollable-chat')
-        l.scrollTop = l.scrollHeight
-        mdui.mutation()
+        webSocket.sendMessage(e.target.value)
         e.target.value = ""
     }
 })

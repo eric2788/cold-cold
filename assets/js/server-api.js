@@ -20,6 +20,13 @@ const signOut = async (token) => {
     })
 }
 
+const validate = async (token) => {
+    return await ajax({
+        url: authApi.concat('validate'),
+        data: token
+    })
+}
+
 const getUsers = async () => {
     return await ajax({
         url: userApi.concat('users'),

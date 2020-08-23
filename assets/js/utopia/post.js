@@ -19,6 +19,7 @@ function init(id){
         $('#content').replaceWith(doc.documentElement.innerHTML)
     }).catch(err=>{
         console.error(err);
+        mdui.snackbar(err).open()
         init('404');
     })
 }

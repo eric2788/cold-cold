@@ -1,7 +1,59 @@
 'use strict';
 
+const cache = {
+    uuid: undefined,
+    badge: undefined
+}
+
 if (sessionManager.token === undefined) {
     document.location.href = homeUrl.concat('login.html')
+} else {
+    validate(sessionManager.token).then(({res, xhr})=>{
+        if (xhr.status === 200){
+            sessionManager.token = res.token
+
+            if (res.user.admin){
+                console.debug('user is admin')
+                const node = `
+                    <a class="mdui-list-item mdui-ripple" id="badge">
+                        <i class="mdui-list-item-icon mdui-icon material-icons">local_florist</i>
+                        <div class="mdui-list-item-content">徽章設定</div>
+                     </a>
+                `
+                $("#admin-section").replaceWith(node)
+            }
+
+            $("#nav").children('a').each((_, ele) => {
+                const id = ele.getAttribute('id')
+                if (id === null) {
+                    console.debug('no id within element, won\'t change pages');
+                    return
+                }
+                if (ele.classList.contains('not-page')){
+                    console.debug(id+' has not-page, skipped');
+                    return
+                }
+                ele.addEventListener('click', () => changePage(id).catch(console.error))
+            })
+
+            updateServerCount()
+
+            return changePage('news')
+        }else{
+            alert(res)
+            alert(xhr)
+            console.warn(res)
+            console.warn(xhr)
+        }
+    }).catch(err => {
+        if (err.response){
+            console.warn(err.response)
+        }else{
+            console.error(err)
+            mdui.snackbar(err)
+        }
+        document.location.href = homeUrl.concat('login.html')
+    })
 }
 
 addPage('news', './assets/pages/news.html')
@@ -11,21 +63,19 @@ addPage('intro', './assets/pages/intro.html')
 addPage('chat', './assets/pages/chat.html', true)
 addPage('player-list', './assets/pages/player-list.html', true)
 addPage('account', './assets/pages/account.html', true)
+addPage('player', './assets/pages/player.html', true)
+addPage('badge', './assets/pages/badge.html', true)
 
-changePage('news').catch(console.error)
+function userPage(uuid) {
+    cache.uuid = uuid
+    changePage('player')
+        .then(() => cache.uuid = undefined)
+        .catch(err => mdui.snackbar(err).open())
+}
 
 const drawer = new mdui.Drawer('#drawer', {swipe: true})
 
 $('#toggle-drawer').on('click', () => drawer.toggle())
-
-$("#nav").children('a').each((_, ele) => {
-    const id = ele.getAttribute('id')
-    if (id === undefined) {
-        console.debug('no id within element, won\'t change pages');
-        return
-    }
-    ele.addEventListener('click', () => changePage(id).catch(console.error))
-})
 
 $("#change-color").children('button').each((_, ele) => {
     const color = ele.getAttribute('id')
@@ -36,7 +86,28 @@ $("#change-color").children('button').each((_, ele) => {
     ele.addEventListener('click', () => setTheme(color))
 })
 
-function logout(){
+function handleErrorAlert(err) {
+    if (err.response){
+        console.warn(err.response)
+        const res = JSON.parse(err.response)
+        let node
+        if (res.error){
+            node = alertNode(res)
+        }else{
+            const data = {
+                error: res.title,
+                errorMessage: JSON.stringify(res.errors)
+            }
+            node = alertNode(data)
+        }
+        $('#alert').replaceWith(node)
+    }else{
+        console.warn(err)
+        mdui.snackbar(err?.message || 'ERROR').open()
+    }
+}
+
+$("#logout-Btn").one('click', (_) => {
     const token = sessionManager.token
     if (token === undefined){
         console.warn('unknown token, back to login')
@@ -47,17 +118,33 @@ function logout(){
     if (isLoading(logoutBtn)){
         return;
     }
-    setLoading(logoutBtn, true)
+    lockOverlay()
     signOut(token).then(({_, xhr}) => {
         console.debug(`status response: ${xhr.status}`)
         console.debug('logout successful')
-        sessionManager.remove()
-        window.location.href = homeUrl.concat('/login.html')
     }).catch(xhr => {
         console.error(xhr)
     }).finally(() => {
-        setLoading(logoutBtn, false)
+        unlockOverlay()
+        sessionManager.remove()
+        window.location.href = homeUrl.concat('/login.html')
     })
+})
 
+function lockOverlay(){
+    $.showOverlay(3000000)
+    $('body').css({
+        'pointer-events': 'none'
+    })
+    mdui.mutation()
+
+}
+
+function unlockOverlay(){
+    $.hideOverlay(true)
+    $('body').css({
+        'pointer-events': 'auto'
+    })
+    mdui.mutation()
 }
 

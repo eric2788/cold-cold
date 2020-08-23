@@ -43,6 +43,22 @@ const ajax = async function (options){
     })
 }
 
+const alertNode = function (res, id = 'alert') {
+    return `
+        <div id="${id}" class="mdui-card mdui-color-red mdui-text-color-white">
+            <div class="mdui-card-primary">
+                <div class="mdui-card-primary-title">
+                    ${res.error}
+                </div>
+                <div class="mdui-card-primary-subtitle">
+                    ${res.errorMessage}
+                </div>
+            </div>
+           
+        </div>
+        `
+}
+
 const setLoading = function (e, loading){
     e.prop('disabled', loading)
     if (loading) {
@@ -81,6 +97,9 @@ changeTheme(oldColor, oldColor)
 
 const sessionManager = {
     set token(data) {
+        if (!data.accessToken || !data.clientToken){
+            console.error('cannot set token with '+JSON.stringify(data)+', pattern not match')
+        }
         window.sessionStorage.setItem(TOKEN_KEY, btoa(JSON.stringify(data)))
     },
     get token() {

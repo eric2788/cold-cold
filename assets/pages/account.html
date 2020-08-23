@@ -1,83 +1,30 @@
 <div id="heaven">
     <div class="mdui-card mdui-container-fluid">
-        <div class="mdui-row-sm-1 mdui-row-md-3">
-           <div class="mdui-col mdui-text-center">
-               <img alt="body" class="mdui-p-a-5" src="https://minotar.net/armor/body/Hydranapse_" />
-           </div>
-            <div class="mdui-col">
-                <div class="mdui-textfield mdui-textfield-floating-label">
-                    <label class="mdui-textfield-label">UUID</label>
-                    <input class="mdui-textfield-input" disabled type="text" value="dahwihdiawhidhaw">
-                </div>
-                <div class="mdui-textfield mdui-textfield-floating-label">
-                    <label class="mdui-textfield-label">用戶名</label>
-                    <input class="mdui-textfield-input" disabled type="text" value="Hydranapse_">
-                </div>
-                <div class="mdui-textfield mdui-textfield-floating-label">
-                    <label class="mdui-textfield-label">暱稱</label>
-                    <input class="mdui-textfield-input" type="text" value="西納">
-                </div>
-                <div class="mdui-textfield mdui-textfield-floating-label">
-                    <label class="mdui-textfield-label">狀態</label>
-                    <input class="mdui-textfield-input" disabled type="text" value="下線">
-                </div>
-                <div class="mdui-textfield mdui-textfield-floating-label">
-                    <label class="mdui-textfield-label">簡介</label>
-                    <input class="mdui-textfield-input" type="text" value="你好這是狀態簡介">
-                </div>
-            </div>
-            <div class="mdui-col">
-                <div class="mdui-textfield mdui-textfield-floating-label">
-                    <label class="mdui-textfield-label">上次登入時間</label>
-                    <input class="mdui-textfield-input" disabled type="datetime-local" value="2020-08-12T19:30">
-                </div>
-                <div class="mdui-textfield mdui-textfield-floating-label">
-                    <label class="mdui-textfield-label">加入時間</label>
-                    <input class="mdui-textfield-input" disabled type="date" value="2020-07-22">
-                </div>
-                <div class="mdui-card mdui-shadow-0">
-                    <div class="mdui-card-primary">
-                        <div class="mdui-card-primary-title">
-                            徽章
+        <div id="alert"></div>
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title" id="username">Loading...</div>
+            <div class="mdui-card-primary-subtitle">個人設定</div>
+        </div>
+        <div class="mdui-card-content">
+            <form id="update" onsubmit="return false">
+                <div class="mdui-row mdui-row-sm-1 mdui-row-md-2">
+                    <div class="mdui-col">
+                        <div class="mdui-textfield">
+                            <label class="mdui-textfield-label">修改暱稱</label>
+                            <input class="mdui-textfield-input" type="text" id="nickname" name="nickname"/>
                         </div>
                     </div>
-                    <div class="mdui-card-content">
-                        <ul class="mdui-list">
-                            <li class="mdui-list-item">
-                                <div class="mdui-list-item-avatar">
-                                    <img alt="avatar" src="https://minotar.net/avatar/Hydranapse_/100">
-                                </div>
-                                <div class="mdui-list-item-content">徽章一個</div>
-                            </li>
-                            <li class="mdui-list-item">
-                                <div class="mdui-list-item-avatar">
-                                    <img alt="avatar" src="https://minotar.net/avatar/Hydranapse_/100">
-                                </div>
-                                <div class="mdui-list-item-content">徽章一個</div>
-                            </li>
-                            <li class="mdui-list-item">
-                                <div class="mdui-list-item-avatar">
-                                    <img alt="avatar" src="https://minotar.net/avatar/Hydranapse_/100">
-                                </div>
-                                <div class="mdui-list-item-content">徽章一個</div>
-                            </li>
-                            <li class="mdui-list-item">
-                                <div class="mdui-list-item-avatar">
-                                    <img alt="avatar" src="https://minotar.net/avatar/Hydranapse_/100">
-                                </div>
-                                <div class="mdui-list-item-content">徽章一個</div>
-                            </li>
-                            <li class="mdui-list-item">
-                                <div class="mdui-list-item-avatar">
-                                    <img alt="avatar" src="https://minotar.net/avatar/Hydranapse_/100">
-                                </div>
-                                <div class="mdui-list-item-content">徽章一個</div>
-                            </li>
-                        </ul>
+                    <div class="mdui-col">
+                        <div class="mdui-p-a-5">
+                            <button class="mdui-btn mdui-color-theme mdui-btn-block mdui-ripple" id="check-self-btn">查看自己資料</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <button class="mdui-btn mdui-btn-block mdui-color-theme">儲存</button>
+                <div class="mdui-textfield">
+                    <textarea class="mdui-textfield-input" rows="4" placeholder="修改簡介" id="status" name="status"></textarea>
+                </div>
+            </form>
         </div>
     </div>
+    <button class="mdui-btn mdui-shadow-5 mdui-btn-block mdui-color-theme mdui-ripple" id="save-self">儲存</button>
 </div>

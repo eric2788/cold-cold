@@ -1,0 +1,55 @@
+<div id="heaven">
+    <div class="mdui-card mdui-container-fluid">
+        <div id="alert"></div>
+        <div class="mdui-row-sm-1 mdui-row-md-3">
+           <div class="mdui-col mdui-text-center">
+               <img alt="body" class="mdui-p-a-5" src="https://minotar.net/armor/body/803a62d14d674a1e9a8bf510ed398d3e" id="body-img" />
+           </div>
+            <div class="mdui-col">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">用戶名</label>
+                    <input class="mdui-textfield-input" disabled type="text" value="Loading..." id="username">
+                </div>
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">暱稱</label>
+                    <input class="mdui-textfield-input" type="text" disabled value="Loading..." id="nickname">
+                </div>
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">狀態</label>
+                    <span id="online"></span>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">簡介</label>
+                    <textarea class="mdui-textfield-input" rows="4" placeholder="簡介" disabled id="status">Loading</textarea>
+                </div>
+                <label class="mdui-checkbox">
+                    <input type="checkbox" id="admin" disabled/>
+                    <i class="mdui-checkbox-icon"></i>
+                    管理員
+                </label>
+            </div>
+            <div class="mdui-col">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">上次登入時間</label>
+                    <input class="mdui-textfield-input" disabled type="datetime-local" value="2020-08-12T19:30" id="last-login">
+                </div>
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">加入時間</label>
+                    <input class="mdui-textfield-input" disabled type="date" value="2020-07-22" id="join-time">
+                </div>
+                <div class="mdui-card mdui-shadow-0">
+                    <div class="mdui-card-primary">
+                        <div class="mdui-card-primary-title">
+                            徽章
+                        </div>
+                    </div>
+                    <div class="mdui-card-content">
+                        <ul class="mdui-list" id="badges">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

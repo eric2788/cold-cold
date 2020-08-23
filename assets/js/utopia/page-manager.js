@@ -5,6 +5,10 @@ const changeOption = new Map()
 
 let currentPage = null
 
+const pageSettings = {
+    enableCaching: false
+}
+
 const addPage = (pageId, locate, haveScript = false) => {
     pageMap[pageId] = { locate, haveScript }
 }
@@ -23,14 +27,14 @@ const renderPage = async (pageId) => {
         console.warn("render failed, cannot find pageId " + pageId)
         throw Error("cannot find pageId " + pageId)
     }
-    const locate = page.locate
+    const locate = page.locate.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')
     console.debug('rendering pages ' + locate)
     return await fetch(locate).then(res => res.text())
 }
 
-async function changePage(id) {
+async function changePage(id, data = {}) {
     const heaven = $("#heaven")
-    const res = await renderPage(id)
+    const res = await renderPage(id, true)
     console.debug('changing pages ' + id)
     let pageItem = $(`.mdui-list`)
     if(currentPage) {
@@ -41,12 +45,14 @@ async function changePage(id) {
     pageItem.find(`#${currentPage}`).addClass('mdui-list-item-active')
     console.debug(`added ${currentPage} as active`)
     heaven.replaceWith(res)
+    if (pageMap[currentPage].haveScript) {
+        await loadScript(currentPage, true)
+        console.log('script loaded')
+    }
     if (changeOption.has(id)) {
         console.debug('pageChange action executed for ' + id)
-        changeOption.get(id).call(res)
-    }
-    if (pageMap[currentPage].haveScript) {
-        await loadScript(currentPage)
+        const func = changeOption.get(id)
+        func(res, data)
     }
     mdui.mutation()
     return res;
@@ -60,8 +66,8 @@ const unloadScript = function (page) {
         })
 }
 
-const loadScript = async function (page, callback = () => {}){
-    const url = `./assets/js/utopia/pages/${page}.js`
+const loadScript = async function (page){
+    const url = `./assets/js/utopia/pages/${page}.js`.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')
 
     const result = await fetch(url)
     const notExist = result.status === 404

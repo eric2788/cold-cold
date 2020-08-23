@@ -25,12 +25,7 @@
             </a>
             <span class="mdui-typo-title">Cloud Heaven Server</span>
             <div class="mdui-toolbar-spacer"></div>
-            <a href="javascript:;" class="mdui-btn mdui-btn-icon">
-                <i class="mdui-icon material-icons">search</i>
-            </a>
-            <a href="javascript:;" class="mdui-btn" onclick="logout()" id="logout-btn">
-                登出
-            </a>
+            <span id="server-count"></span>
         </div>
     </div>
 
@@ -66,6 +61,11 @@
             <a class="mdui-list-item mdui-ripple" id="account">
                 <i class="mdui-list-item-icon mdui-icon material-icons">account_box</i>
                 <div class="mdui-list-item-content">個人資訊</div>
+            </a>
+            <div id="admin-section"></div>
+            <a class="mdui-list-item mdui-ripple not-page" id="logout-Btn">
+                <i class="mdui-list-item-icon mdui-icon material-icons">account_box</i>
+                <div class="mdui-list-item-content">登出</div>
             </a>
             <li class="mdui-subheader">關於伺服器</li>
             <a class="mdui-list-item mdui-ripple" id="about">
@@ -118,4 +118,5 @@
 <script type="text/javascript" src="assets/js/server-api.js"></script>
 <script type="text/javascript" src="./assets/js/utopia/page-manager.js"></script>
 <script type="text/javascript" src="./assets/js/utopia/index.js" ></script>
+<script type="text/javascript" src="./assets/js/server-socket.js" ></script>
 </html>
