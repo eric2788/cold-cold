@@ -189,6 +189,7 @@ function unlockOverlay(){
     $('body').css({
         'pointer-events': 'auto'
     })
+    if (!drawer.isDesktop() && drawer.isOpen()) drawer.close()
     mdui.mutation()
 }
 
