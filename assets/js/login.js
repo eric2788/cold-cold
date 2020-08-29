@@ -18,20 +18,23 @@ if (sessionManager.token !== undefined) {
     })
 }
 
-const btn = $('#loginBtn')
+const loginBtn = $('#loginBtn')
 
 function submit(e) {
     if (e instanceof KeyboardEvent){
         if (e.key !== 'Enter') return;
     }
-    if (isLoading(btn)) return
+    if (isLoading(loginBtn)) return
     const [{value: username}, {value: pw}] = $('#login').serializeArray();
     if (!username || !pw) {
         console.log('login failed because of empty string')
         return
     }
-    setLoading(btn, true)
-    login(username, pw).then( ({res, _}) => {
+    setLoading(loginBtn, true)
+    login(username, pw).then( ({res, xhr}) => {
+        if (xhr.status !== 200){
+            return
+        }
         sessionManager.token = res
         document.location.href = homeUrl.concat('utopia.html')
     }).catch(err => {
@@ -41,13 +44,13 @@ function submit(e) {
             $('#alert').replaceWith(alertNode(res))
         }else{
             console.warn(err)
-            mdui.snackbar(err || 'ERROR').open()
+            mdui.snackbar('<span class="mdui-text-color-red">與伺服器失去連線</span>')
         }
     }).finally(() => {
-        setLoading(btn, false)
+        setLoading(loginBtn, false)
     })
 }
 
-btn.on('click', submit);
+loginBtn.on('click', submit);
 $("#password-input").on('keydown', submit)
 

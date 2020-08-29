@@ -14,10 +14,12 @@ getUser(cache.uuid || undefined).then(({res, xhr})=>{
     online.value = getStatusNode(socketData.online.includes(res.account.uuid))
     online.uuid = res.account.uuid
     $('#status')[0].value = res.account.status
-    $('#join-time')[0].value = res.account.joinTime
-    $('#admin')[0].value = res.account.admin
+    $('#last-login')[0].value = new Date(res.cmi.lastLoginTime).toISOString()
+    $('#play-time')[0].value = `${new Date(res.cmi.totalPlayTime).getHours()}小時`
+    $('#join-time')[0].value = new Date(res.account.joinTime).toISOString().slice(0,10)
+    $('#admin')[0].checked = res.account.admin
 
-    console.log(res.badges)
+    console.debug(res.badges)
     for(const badge of res.badges){
         const insert = `
             <li class="mdui-list-item">
@@ -29,6 +31,7 @@ getUser(cache.uuid || undefined).then(({res, xhr})=>{
         `
         $("#badges").append(insert)
     }
+    mdui.updateTextFields()
 }).catch(handleErrorAlert).finally(() =>{
     unlockOverlay()
     mdui.mutation()

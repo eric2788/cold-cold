@@ -19,7 +19,8 @@ $.ajaxSetup({
     processData: false,
     xhrFields: {
         withCredentials: true
-    }
+    },
+    timeout: 15000
 });
 
 const TOKEN_KEY = 'el.mojang.token'
@@ -30,8 +31,6 @@ const ajax = async function (options){
             ...options,
             data: JSON.stringify(options.data || {}),
             complete: (xhr, status) => {
-                console.debug(`status: ${status}`)
-                console.debug(xhr)
                 if (status === 'error'){
                     reject(xhr)
                 }else{

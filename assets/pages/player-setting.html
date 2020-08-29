@@ -1,0 +1,60 @@
+<div id="heaven">
+    <div class="mdui-card mdui-container-fluid">
+        <div id="alert"></div>
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title">
+                玩家設定
+            </div>
+            <div class="mdui-card-content">
+                <div class="mdui-row mdui-row-sm-1 mdui-row-md-2 mdui-row-lg-3">
+                    <div class="mdui-col">
+                        <div class="mdui-textfield" id="player-uuid-field">
+                            <label class="mdui-textfield-label">搜索玩家 UUID</label>
+                            <input class="mdui-textfield-input" type="text" id="player-uuid" required placeholder="輸入uuid"/>
+                            <div class="mdui-textfield-error">無效的UUID格式</div>
+                        </div>
+                    </div>
+                    <div class="mdui-col mdui-p-a-5">
+                        <button class="mdui-btn mdui-color-theme mdui-btn-block" disabled id="player-search">搜索</button>
+                    </div>
+                    <form id="player-display" onsubmit="return false">
+                        <div class="mdui-col">
+                            <div class="mdui-textfield">
+                                <label class="mdui-textfield-label">玩家名稱</label>
+                                <input class="mdui-textfield-input" type="text" id="player-name" disabled/>
+                            </div>
+                        </div>
+                        <div class="mdui-col mdui-p-a-5">
+                            <button class="mdui-btn mdui-color-theme mdui-btn-block" id="info-btn" disabled>查看玩家資料</button>
+                        </div>
+                        <p>修改: </p>
+                        <div class="mdui-col">
+                            <div class="mdui-textfield">
+                                <label class="mdui-textfield-label">暱稱</label>
+                                <input class="mdui-textfield-input" type="text" id="nickname" disabled/>
+                            </div>
+                        </div>
+                        <div class="mdui-col">
+                            <div class="mdui-textfield">
+                                <textarea class="mdui-textfield-input" rows="4" placeholder="簡介" id="status" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="mdui-col">
+                            <label class="mdui-switch">
+                                <input type="checkbox" id="admin" disabled/>
+                                <i class="mdui-switch-icon"></i>
+                                管理員
+                            </label>
+                        </div>
+                        <div class="mdui-col mdui-m-b-3">
+                            擁有徽章
+                            <select class="mdui-select" disabled id="badge-list" multiple style="width: 100%"></select>
+                        </div>
+                    </form>
+                    <button class="mdui-btn mdui-btn-block mdui-color-theme mdui-ripple" id="save-btn" disabled>儲存</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

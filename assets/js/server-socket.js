@@ -31,8 +31,8 @@ class HeavenSocket {
             const data = JSON.parse(event.data)
             switch (data.Type){
                 case 0:
-                    console.log('server online: ')
-                    console.log(data.Data)
+                    console.debug('server online: ')
+                    console.debug(data.Data)
                     socketData.online = data.Data
                     updateOnline()
                     break;
@@ -44,6 +44,7 @@ class HeavenSocket {
         };
         this._socket.onerror = function(event) {
             console.log("error: " + event.data);
+            mdui.snackbar(event.data)
         };
     }
 
@@ -93,6 +94,8 @@ function appendChat(identity, message, fromMC){
     l.scrollTop = l.scrollHeight
     mdui.mutation()
 }
+
+
 
 function updateOnline(){
     $('#online').each((_, ele) => {

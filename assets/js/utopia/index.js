@@ -5,6 +5,27 @@ const cache = {
     badge: undefined
 }
 
+async function checkIfAdmin(){
+    if (!sessionManager.token) {
+        window.location.href = homeUrl.concat('login.html')
+    }
+    await validate(sessionManager.token).then(({res,xhr})=>{
+        if (xhr.status !== 200){
+            window.location.href = homeUrl.concat('login.html')
+            return
+        }
+        sessionManager.token = res.token
+        if (window.location.href === homeUrl.concat('utopia.html')) return
+        if (!res.user.admin){
+            alert('you are not admin!')
+            window.location.href = homeUrl.concat('utopia.html')
+        }
+    }).catch(err => {
+        console.error(err)
+        window.location.href = homeUrl.concat('login.html')
+    })
+}
+
 if (sessionManager.token === undefined) {
     document.location.href = homeUrl.concat('login.html')
 } else {
@@ -18,6 +39,10 @@ if (sessionManager.token === undefined) {
                     <a class="mdui-list-item mdui-ripple" id="badge">
                         <i class="mdui-list-item-icon mdui-icon material-icons">local_florist</i>
                         <div class="mdui-list-item-content">徽章設定</div>
+                     </a>
+                     <a class="mdui-list-item mdui-ripple" id="player-setting">
+                        <i class="mdui-list-item-icon mdui-icon material-icons">person</i>
+                        <div class="mdui-list-item-content">玩家設置</div>
                      </a>
                 `
                 $("#admin-section").replaceWith(node)
@@ -65,6 +90,7 @@ addPage('player-list', './assets/pages/player-list.html', true)
 addPage('account', './assets/pages/account.html', true)
 addPage('player', './assets/pages/player.html', true)
 addPage('badge', './assets/pages/badge.html', true)
+addPage('player-setting', './assets/pages/player-setting.html', true)
 
 function userPage(uuid) {
     cache.uuid = uuid
@@ -92,6 +118,24 @@ function handleErrorAlert(err) {
         const res = JSON.parse(err.response)
         let node
         if (res.error){
+            if (res.errorMessage === 'Invalid token'){
+                unlockOverlay()
+                mdui.dialog({
+                    title: '無效的 session Token',
+                    content: '你需要重新登入以確保順利存取資料。',
+                    buttons: [
+                        {
+                            text: '登出',
+                            onClick: () => {
+                                signOut(sessionManager.token).catch(console.error)
+                            }
+                        },
+                        {
+                            text: '取消'
+                        }
+                    ]
+                })
+            }
             node = alertNode(res)
         }else{
             const data = {

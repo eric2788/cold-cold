@@ -10,7 +10,7 @@ getUser().then(({res, xhr})=>{
     $('#nickname')[0].value = res.account.nickName
     $('#status')[0].value = res.account.status
 
-    $('#check-self-btn').on('click', (e) => {
+    $('#check-self-btn').one('click', (e) => {
         e.preventDefault()
         console.debug(res.uuid)
         userPage(res.uuid)
@@ -22,7 +22,7 @@ getUser().then(({res, xhr})=>{
         const [{value: nickname}, {value: status}] = $("#update").serializeArray()
         updateUser({nickname, status}, res.uuid).then(({res, xhr})=>{
             if (xhr.status === 204){
-                mdui.snackbar('update successful')
+                mdui.snackbar('更新成功')
             }else{
                 console.warn('response status is not 204')
                 console.warn(res)
@@ -30,7 +30,7 @@ getUser().then(({res, xhr})=>{
             }
         }).catch(handleErrorAlert).finally(() => setLoading(btn, false))
     })
-
+    mdui.updateTextFields()
 }).catch(handleErrorAlert).finally(() =>{
     unlockOverlay()
     mdui.mutation()
