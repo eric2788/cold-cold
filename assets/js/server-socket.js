@@ -38,7 +38,7 @@ class HeavenSocket {
                     break;
                 case 1:
                     if (currentPage !== 'chat') return
-                    appendChat(data.Data.Identity, data.Data.Message, data.Data.FromMC)
+                    appendChat(data.Data.Identity, data.Data.Message, data.Data.FromMC, data.Data.Server)
                     break;
             }
         };
@@ -77,12 +77,12 @@ class HeavenSocket {
 
 const webSocket = new HeavenSocket(socketUrl)
 
-function appendChat(identity, message, fromMC){
+function appendChat(identity, message, fromMC, server){
     if (currentPage !== 'chat'){
         console.warn('not in chat page')
         return
     }
-    const chatFormat = fromMC || !identity.NickName ? `${identity.UserName}: ${message}` : `${identity.UserName}(${identity.NickName}): ${message}`
+    const chatFormat = fromMC ? `${identity.UserName}(${server}): ${message}` : `${identity.UserName}${identity.NickName ? `(${identity.NickName})` : ''}: ${message}`
     const node = `
               <li class="mdui-list-item">
                  ${chatFormat}
