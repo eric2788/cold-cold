@@ -147,7 +147,7 @@ function handleErrorAlert(err) {
             const node = alertNode(data)
             $('#alert').replaceWith(node)
         }else{
-            mdui.alert(data.error, data.errorMessage)
+            mdui.alert(data.errorMessage, data.error)
         }
     }else{
         console.warn(err)

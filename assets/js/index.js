@@ -51,7 +51,7 @@ const alertNode = function (res, id = 'alert') {
         <div id="${id}" class="mdui-card mdui-color-red mdui-text-color-white">
             <div class="mdui-card-primary">
                 <div class="mdui-card-primary-subtitle">
-                    ${res.error}: ${res.errorMessage}
+                    <span class="mdui-text-color-white">${res.error}: ${res.errorMessage}</span>
                 </div>
             </div>
         </div>
