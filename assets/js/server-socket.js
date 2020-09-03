@@ -1,5 +1,5 @@
 
-const socketUrl = "ws://localhost:5000/ws";
+const socketUrl = "wss://cloudheavenapi.iw.gy/ws";
 
 const socketData = {
     online: [],
