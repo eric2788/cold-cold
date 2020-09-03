@@ -5,10 +5,6 @@ const changeOption = new Map()
 
 let currentPage = null
 
-const pageSettings = {
-    enableCaching: false
-}
-
 const addPage = (pageId, locate, haveScript = false) => {
     pageMap[pageId] = { locate, haveScript }
 }

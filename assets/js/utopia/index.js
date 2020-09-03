@@ -116,7 +116,7 @@ function handleErrorAlert(err) {
     if (err.response){
         console.warn(err.response)
         const res = JSON.parse(err.response)
-        let node
+        let data
         if (res.error){
             if (res.errorMessage === 'Invalid token'){
                 unlockOverlay()
@@ -136,15 +136,19 @@ function handleErrorAlert(err) {
                     ]
                 })
             }
-            node = alertNode(res)
+            data = res
         }else{
-            const data = {
+            data = {
                 error: res.title,
                 errorMessage: JSON.stringify(res.errors)
             }
-            node = alertNode(data)
         }
-        $('#alert').replaceWith(node)
+        if (drawer.isDesktop()){
+            const node = alertNode(data)
+            $('#alert').replaceWith(node)
+        }else{
+            mdui.alert(data.error, data.errorMessage)
+        }
     }else{
         console.warn(err)
         mdui.snackbar(err?.message || 'ERROR').open()

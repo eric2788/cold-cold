@@ -41,7 +41,11 @@ function submit(e) {
         if (err.response){
             console.warn(err.response)
             const res = JSON.parse(err.response)
-            $('#alert').replaceWith(alertNode(res))
+            if (isDesktop()){
+                $('#alert').replaceWith(alertNode(res))
+            }else{
+                mdui.alert(res.error, res.errorMessage)
+            }
         }else{
             console.warn(err)
             mdui.snackbar('<span class="mdui-text-color-red">與伺服器失去連線</span>')

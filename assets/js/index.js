@@ -4,6 +4,10 @@ console.log('index.js loaded')
 
 const $ = mdui.$;
 
+const pageSettings = {
+    enableCaching: false
+}
+
 const api = "https://cloudheavenapi.iw.gy"
 
 $.ajaxSetup({
@@ -46,14 +50,10 @@ const alertNode = function (res, id = 'alert') {
     return `
         <div id="${id}" class="mdui-card mdui-color-red mdui-text-color-white">
             <div class="mdui-card-primary">
-                <div class="mdui-card-primary-title">
-                    ${res.error}
-                </div>
                 <div class="mdui-card-primary-subtitle">
-                    ${res.errorMessage}
+                    ${res.error}: ${res.errorMessage}
                 </div>
             </div>
-           
         </div>
         `
 }
@@ -83,6 +83,8 @@ const changeTheme = (oldColor, color) => {
     }
     body.addClass(colorCls)
 }
+
+const isDesktop = () => window.innerWidth > 600
 
 const setTheme = (color) => {
     const oldColor = window.localStorage.getItem('el.theme.color') || 'indigo'
