@@ -4,7 +4,7 @@ console.log('index.js loaded')
 
 const $ = mdui.$;
 
-const api = "https://localhost:5001"
+const api = "https://cloudheavenapi.iw.gy"
 
 $.ajaxSetup({
     global: true,
@@ -72,7 +72,7 @@ const isLoading = function (e) {
     return e.prop('disabled')
 }
 
-const homeUrl = window.location.origin.concat('/cold-cold/')
+const homeUrl = window.location.origin.concat('/')
 
 const changeTheme = (oldColor, color) => {
    const body =  $("body")

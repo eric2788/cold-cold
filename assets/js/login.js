@@ -54,3 +54,23 @@ function submit(e) {
 loginBtn.on('click', submit);
 $("#password-input").on('keydown', submit)
 
+function openTerms(){
+    fetch('./settings/terms.json'.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')).then(r => r.json()).then(json => {
+        const line = json.termsLogin.map(s => `<p>${s}</p>`).join('\n')
+        mdui.dialog({
+            title: '登入此網站則代表你同意以下條款',
+            content: `
+            <div style="overflow-y: scroll; max-height: 500px">
+                `+line+`
+            </div>
+        `
+        })
+    }).catch(err => {
+        mdui.dialog({
+            title: '登入此網站則代表你同意以下條款',
+            content: `<span>加載失敗: ${err?.message || JSON.stringify(err)}, 請重新再試</span>`
+        })
+    })
+
+}
+
