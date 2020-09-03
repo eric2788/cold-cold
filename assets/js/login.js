@@ -44,7 +44,7 @@ function submit(e) {
             if (isDesktop()){
                 $('#alert').replaceWith(alertNode(res))
             }else{
-                mdui.alert(res.error, res.errorMessage)
+                mdui.alert(res.errorMessage, res.error)
             }
         }else{
             console.warn(err)
