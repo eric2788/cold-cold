@@ -37,7 +37,7 @@ const ajax = async function (options){
             complete: (xhr, status) => {
                 if (status === 'error'){
                     reject(xhr)
-                }else{
+                } else {
                     const res = xhr.response ? JSON.parse(xhr.response) : undefined
                     resolve({res, xhr})
                 }
@@ -45,6 +45,8 @@ const ajax = async function (options){
         }).catch(reject)
     })
 }
+
+Object.prototype.also = callback => callback(this)
 
 const alertNode = function (res, id = 'alert') {
     return `
