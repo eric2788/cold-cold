@@ -7,14 +7,19 @@ const perLoadCount = 10
 fetch('./settings/news.json').then(r=>r.json()).then(json => {
     let times = 0
 
+    const btn = $('#news-load-btn')
     function loadMore() {
         const news = json.slice(perLoadCount * times, perLoadCount)
         appendList(news)
         times++
+        if (json.length >= perLoadCount * times) {
+            btn.remove()
+        }
+        mdui.mutation()
     }
 
     loadMore()
-    $('#news-load-btn').on('click', loadMore)
+    btn.on('click', loadMore)
 }).catch(handleErrorAlert)
 
 
@@ -32,5 +37,4 @@ function appendList(news) {
         `
         list.append(node)
     }
-    list.mutation()
 }

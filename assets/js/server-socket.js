@@ -17,60 +17,64 @@ class HeavenSocket {
         this._url = url
     }
 
-    initialize(){
-        if (sessionManager.token === undefined){
+    async initialize() {
+        if (sessionManager.token === undefined) {
             console.error('Token is null, cannot open websocket')
             return
         }
-        this._socket = new WebSocket(this._url.concat(`?client=${sessionManager.token.clientToken}`))
-        this._socket.onopen = function (event) {
-            console.log("opened connection to " + socketUrl);
-        };
-        this._socket.onclose = function(event) {
-            console.log("closed connection from " + socketUrl);
-        };
-        this._socket.onmessage = function(event) {
-            console.debug('receive socket message: ')
-            console.debug(event.data)
-            const data = JSON.parse(event.data)
-            switch (data.Type){
-                case 0:
-                    console.error(`Received Socket Error ${data.Data}`)
-                    mdui.alert(data.Data, 'Socket Error')
-                    break;
-                case 1:
-                    console.debug('server online: ')
-                    console.debug(data.Data)
-                    socketData.online = data.Data
-                    updateOnline()
-                    break;
-                case 2:
-                    if (currentPage !== 'chat') return
-                    appendChat(data.Data)
-                    break;
-            }
-        };
-        this._socket.onerror = function(event) {
-            console.log("error: " + event.data);
-            mdui.snackbar(event.data)
-        };
+        return new Promise((res, rej) => {
+            this._socket = new WebSocket(this._url.concat(`?client=${sessionManager.token.clientToken}`))
+            this._socket.onopen = function (event) {
+                console.log("opened connection to " + socketUrl);
+                res(event.data)
+            };
+            this._socket.onclose = function (event) {
+                console.log("closed connection from " + socketUrl);
+            };
+            this._socket.onmessage = function (event) {
+                console.debug('receive socket message: ')
+                console.debug(event.data)
+                const data = JSON.parse(event.data)
+                switch (data.Type) {
+                    case 0:
+                        console.error(`Received Socket Error ${data.Data}`)
+                        mdui.alert(data.Data, 'Socket Error')
+                        break;
+                    case 1:
+                        console.debug('server online: ')
+                        console.debug(data.Data)
+                        socketData.online = data.Data
+                        updateOnline()
+                        break;
+                    case 2:
+                        if (currentPage !== 'chat') return
+                        appendChat(data.Data)
+                        break;
+                }
+            };
+            this._socket.onerror = function (event) {
+                console.warn("error: " + event.data);
+                mdui.snackbar(event.data)
+                rej(event.data)
+            };
+        })
     }
 
     get isClosed() {
         return this._socket.readyState === this._socket.CLOSED
     }
 
-    sendMessage(msg) {
-        if (this._socket == null){
+    async sendMessage(msg) {
+        if (this._socket == null) {
             console.error('web socket didn\'t opened')
             return
         }
-        if (currentPage !== 'chat'){
+        if (currentPage !== 'chat') {
             console.warn('not in chat page, cannot send message')
         }
-        if (this.isClosed){
+        if (this.isClosed) {
             console.debug('socket closed unexpectedly, restarting...')
-            this.initialize()
+            await this.initialize()
         }
         const data = {
             type: 'BrowserMessage',
@@ -92,12 +96,12 @@ class HeavenSocket {
 }
 
 const webSocket = new HeavenSocket(socketUrl)
-webSocket.initialize()
+webSocket.initialize().catch(console.error)
 
 setInterval(() => {
     if (webSocket.isClosed){
         console.debug('socket closed unexpectedly, restarting...')
-        this.initialize()
+        this.initialize().catch(console.error)
     }
 }, 1000 * 60)
 
