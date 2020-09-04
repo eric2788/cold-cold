@@ -46,7 +46,9 @@ const ajax = async function (options){
     })
 }
 
-Object.prototype.also = callback => callback(this)
+Object.prototype.also = function (callback) {
+    callback(this)
+}
 
 const alertNode = function (res, id = 'alert') {
     return `

@@ -18,10 +18,9 @@ fetch('./settings/news.json').then(r=>r.json()).then(json => {
     }
 
     loadMore()
-    $('.mdui-progress').also(node => {
-        node.remove()
-        node.mutation()
-    })
+    const progress = $('.mdui-progress')
+    progress.remove()
+    progress.mutation()
 
     btn.on('click', loadMore)
 }).catch(handleErrorAlert)
