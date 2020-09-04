@@ -101,7 +101,7 @@ webSocket.initialize().catch(console.error)
 setInterval(() => {
     if (webSocket.isClosed){
         console.debug('socket closed unexpectedly, restarting...')
-        this.initialize().catch(console.error)
+        webSocket.initialize().catch(console.error)
     }
 }, 1000 * 60)
 
