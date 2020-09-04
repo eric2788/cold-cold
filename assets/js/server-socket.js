@@ -26,19 +26,23 @@ class HeavenSocket {
             console.log("closed connection from " + socketUrl);
         };
         this._socket.onmessage = function(event) {
-            console.log('receive socket message: ')
-            console.log(event.data)
+            console.debug('receive socket message: ')
+            console.debug(event.data)
             const data = JSON.parse(event.data)
             switch (data.Type){
                 case 0:
+                    console.error(`Received Socket Error ${data.Data}`)
+                    mdui.alert(data.Data, 'Socket Error')
+                    break;
+                case 1:
                     console.debug('server online: ')
                     console.debug(data.Data)
                     socketData.online = data.Data
                     updateOnline()
                     break;
-                case 1:
+                case 2:
                     if (currentPage !== 'chat') return
-                    appendChat(data.Data.Identity, data.Data.Message, data.Data.FromMC, data.Data.Server)
+                    appendChat(data.Data)
                     break;
             }
         };
@@ -57,7 +61,7 @@ class HeavenSocket {
             console.warn('not in chat page, cannot send message')
         }
         const data = {
-            type: 'Message',
+            type: 'BrowserMessage',
             data: {
                 clientToken: sessionManager.token.clientToken,
                 message: msg
@@ -77,15 +81,14 @@ class HeavenSocket {
 
 const webSocket = new HeavenSocket(socketUrl)
 
-function appendChat(identity, message, fromMC, server){
+function appendChat(chat){
     if (currentPage !== 'chat'){
         console.warn('not in chat page')
         return
     }
-    const chatFormat = fromMC ? `${identity.UserName}(${server}): ${message}` : `${identity.UserName}${identity.NickName ? `(${identity.NickName})` : ''}: ${message}`
     const node = `
               <li class="mdui-list-item">
-                 ${chatFormat}
+                 ${chat}
               </li>
             `
     const chatList = $('#chat-list')
