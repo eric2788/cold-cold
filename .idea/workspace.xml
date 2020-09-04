@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7aace31-2e9c-46de-a1c6-9282871bbeb3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/terms.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/terms.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Easonchu7.github.io.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/server-socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/server-socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/utopia/pages/news.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/utopia/pages/news.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +44,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599231042446</updated>
-      <workItem from="1599231046210" duration="10545000" />
+      <workItem from="1599231046210" duration="11197000" />
     </task>
     <servers />
   </component>

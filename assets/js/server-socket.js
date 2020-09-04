@@ -22,8 +22,8 @@ class HeavenSocket {
             console.error('Token is null, cannot open websocket')
             return
         }
-        this._socket = new WebSocket(url.concat(`?client=${sessionManager.token.clientToken}`))
-        this._socket.onopen = function(event) {
+        this._socket = new WebSocket(this._url.concat(`?client=${sessionManager.token.clientToken}`))
+        this._socket.onopen = function (event) {
             console.log("opened connection to " + socketUrl);
         };
         this._socket.onclose = function(event) {
