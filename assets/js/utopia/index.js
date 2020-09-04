@@ -81,7 +81,7 @@ if (sessionManager.token === undefined) {
     })
 }
 
-addPage('news', './assets/pages/news.html')
+addPage('news', './assets/pages/news.html', true)
 addPage('about', './assets/pages/about.html')
 addPage('rule', './assets/pages/rules.html')
 addPage('intro', './assets/pages/intro.html')

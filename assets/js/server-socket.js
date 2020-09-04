@@ -14,6 +14,10 @@ function getStatusNode(online) {
 
 class HeavenSocket {
     constructor(url) {
+        this._url = url
+    }
+
+    initialize(){
         if (sessionManager.token === undefined){
             console.error('Token is null, cannot open websocket')
             return
@@ -52,6 +56,10 @@ class HeavenSocket {
         };
     }
 
+    get isClosed() {
+        return this._socket.readyState === this._socket.CLOSED
+    }
+
     sendMessage(msg) {
         if (this._socket == null){
             console.error('web socket didn\'t opened')
@@ -59,6 +67,10 @@ class HeavenSocket {
         }
         if (currentPage !== 'chat'){
             console.warn('not in chat page, cannot send message')
+        }
+        if (this.isClosed){
+            console.debug('socket closed unexpectedly, restarting...')
+            this.initialize()
         }
         const data = {
             type: 'BrowserMessage',
@@ -80,6 +92,14 @@ class HeavenSocket {
 }
 
 const webSocket = new HeavenSocket(socketUrl)
+webSocket.initialize()
+
+setInterval(() => {
+    if (webSocket.isClosed){
+        console.debug('socket closed unexpectedly, restarting...')
+        this.initialize()
+    }
+}, 1000 * 60)
 
 function appendChat(chat){
     if (currentPage !== 'chat'){
