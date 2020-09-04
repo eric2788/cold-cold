@@ -11,7 +11,7 @@ input.on('keydown', e => {
             console.debug('empty string, skipped')
             return
         }
-        webSocket.sendMessage(e.target.value)
+        webSocket.sendMessage(e.target.value).catch(console.error)
         e.target.value = ""
     }
 })
