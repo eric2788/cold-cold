@@ -3,7 +3,6 @@
 console.log('news.js loaded')
 
 const perLoadCount = 10
-
 fetch('./settings/news.json').then(r=>r.json()).then(json => {
     let times = 0
 
@@ -12,13 +11,18 @@ fetch('./settings/news.json').then(r=>r.json()).then(json => {
         const news = json.slice(perLoadCount * times, perLoadCount)
         appendList(news)
         times++
-        if (json.length >= perLoadCount * times) {
+        if (json.length <= perLoadCount * times) {
             btn.remove()
         }
         mdui.mutation()
     }
 
     loadMore()
+    $('.mdui-progress').also(node => {
+        node.remove()
+        node.mutation()
+    })
+
     btn.on('click', loadMore)
 }).catch(handleErrorAlert)
 
