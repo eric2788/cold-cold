@@ -79,7 +79,7 @@ const isLoading = function (e) {
 const homeUrl = window.location.origin.concat('/')
 
 const changeTheme = (oldColor, color) => {
-    const body =  $("body")
+   const body =  $("body")
     const oldColorCls = `mdui-theme-primary-${oldColor}`
     const colorCls = `mdui-theme-primary-${color}`
     if (body.hasClass(oldColorCls)) {
