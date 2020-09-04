@@ -37,13 +37,17 @@ const ajax = async function (options){
             complete: (xhr, status) => {
                 if (status === 'error'){
                     reject(xhr)
-                }else{
+                } else {
                     const res = xhr.response ? JSON.parse(xhr.response) : undefined
                     resolve({res, xhr})
                 }
             }
         }).catch(reject)
     })
+}
+
+Object.prototype.also = function (callback) {
+    callback(this)
 }
 
 const alertNode = function (res, id = 'alert') {
@@ -75,7 +79,7 @@ const isLoading = function (e) {
 const homeUrl = window.location.origin.concat('/')
 
 const changeTheme = (oldColor, color) => {
-   const body =  $("body")
+    const body =  $("body")
     const oldColorCls = `mdui-theme-primary-${oldColor}`
     const colorCls = `mdui-theme-primary-${color}`
     if (body.hasClass(oldColorCls)) {
