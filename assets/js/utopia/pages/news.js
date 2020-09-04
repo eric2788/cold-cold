@@ -15,7 +15,7 @@ fetch('./settings/news.json').then(r=>r.json()).then(json => {
 
     loadMore()
     $('#news-load-btn').on('click', loadMore)
-})
+}).catch(handleErrorAlert)
 
 
 function appendList(...news){
