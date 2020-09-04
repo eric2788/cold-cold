@@ -1,4 +1,3 @@
-
 const socketUrl = "wss://cloudheavenapi.iw.gy/ws";
 
 const socketData = {
@@ -101,7 +100,7 @@ webSocket.initialize().catch(console.error)
 setInterval(() => {
     if (webSocket.isClosed){
         console.debug('socket closed unexpectedly, restarting...')
-        this.initialize().catch(console.error)
+        webSocket.initialize().catch(console.error)
     }
 }, 1000 * 60)
 
@@ -139,4 +138,3 @@ function updateOnline(){
 function updateServerCount(){
     $('#server-count')[0].innerHTML = `伺服器人數: ${socketData.count}`
 }
-
