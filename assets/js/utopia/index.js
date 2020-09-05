@@ -129,15 +129,14 @@ function handleErrorAlert(err) {
                     buttons: [
                         {
                             text: '登出',
-                            onClick: () => {
-                                signOut(sessionManager.token).catch(console.error)
-                            }
+                            onClick: () => logout(sessionManager.token)
                         },
                         {
                             text: '取消'
                         }
                     ]
                 })
+                return
             }
             data = res
         }else{
@@ -166,9 +165,13 @@ $("#logout-Btn").one('click', (_) => {
         return
     }
     const logoutBtn = $("#logout-btn")
-    if (isLoading(logoutBtn)){
+    if (isLoading(logoutBtn)) {
         return;
     }
+    logout(token)
+})
+
+function logout(token) {
     lockOverlay()
     signOut(token).then(({_, xhr}) => {
         console.debug(`status response: ${xhr.status}`)
@@ -178,11 +181,11 @@ $("#logout-Btn").one('click', (_) => {
     }).finally(() => {
         unlockOverlay()
         sessionManager.remove()
-        window.location.href = homeUrl.concat('/login.html')
+        window.location.href = homeUrl.concat('login.html')
     })
-})
+}
 
-function lockOverlay(){
+function lockOverlay() {
     $.showOverlay(3000000)
     $('body').css({
         'pointer-events': 'none'
