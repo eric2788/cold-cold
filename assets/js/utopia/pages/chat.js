@@ -7,6 +7,7 @@ const input = $("#chat-input")
 lockOverlay()
 validate(sessionManager.token).then(({res, xhr}) => {
     if (xhr.status === 200) {
+        sessionManager.token = res.token
         $('#chat-header').innerText = `以 ${res.user.userName} 的身份聊天。`
     } else {
         console.warn(res.response)
