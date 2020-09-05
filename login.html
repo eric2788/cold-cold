@@ -17,6 +17,7 @@
     <style type="text/css">
         body {cursor: url(https://cur.cursors-4u.net/nature/nat-11/nat1022.cur), auto !important;}
     </style>
+    <style></style>
     <link rel="icon" href="assets/img/logo1.ico" sizes="16x16" type="image/ico">
     <link rel="icon" href="assets/img/logo1.ico" sizes="16x16" type="image/ico">
     <link type="text/css" rel="stylesheet" href="assets/index.css" >
@@ -72,26 +73,4 @@
         cursor: url(https://cur.cursors-4u.net/nature/nat-11/nat1022.cur), auto !important;
     }
 </style>
-<script>
-    $('assests/img/loading.gif').one('load', function() {
-        $('#spinner').remove();
-    }).each(function() {
-        if(this.complete) {
-            $(this).trigger('load');
-        }
-    });
-    function PreLoadImage( srcURL, callback, errorCallback ) {
-        var thePic = new Image();
-
-        thePic.onload = function() {
-            callback();
-            thePic.onload = function(){};
-        }
-
-        thePic.onerror = function() {
-            errorCallback();
-        }
-        thePic.src = srcURL;
-    }
-</script>
 </html>
