@@ -34,7 +34,7 @@ if (sessionManager.token === undefined) {
         if (xhr.status === 200) {
             sessionManager.token = res.token
 
-            $('#welcome-text')[0].value = `歡迎, ${res.user.userName}`
+            $('#welcome-text').innerText = `歡迎, ${res.user.userName}`
 
             if (res.user.admin) {
                 console.debug('user is admin')
