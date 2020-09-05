@@ -56,7 +56,7 @@ function setInputLoading(field, input, loading) {
         field.append(node)
     } else {
         input.prop('disabled', false)
-        field.remove('.mdui-progress')
+        field.find('.mdui-progress').remove()
     }
     field.mutation()
     input.mutation()
