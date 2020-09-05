@@ -251,5 +251,18 @@
             $(this).trigger('load');
         }
     });
+    function PreLoadImage( srcURL, callback, errorCallback ) {
+        var thePic = new Image();
+
+        thePic.onload = function() {
+            callback();
+            thePic.onload = function(){};
+        }
+
+        thePic.onerror = function() {
+            errorCallback();
+        }
+        thePic.src = srcURL;
+    }
 </script>
 </html>
