@@ -17,12 +17,22 @@ class HeavenSocket {
         this._url = url
     }
 
+    _lastSent = new Date()
+
+    get isClosed() {
+        return this._socket?.readyState === WebSocket.CLOSED
+    }
+
     async initialize() {
         if (sessionManager.token === undefined) {
             console.error('Token is null, cannot open websocket')
             return
         }
         return new Promise((res, rej) => {
+            if (this._socket?.readyState === WebSocket.OPEN) {
+                console.log('socket already opened, no need to initialize')
+                return
+            }
             this._socket = new WebSocket(this._url.concat(`?client=${sessionManager.token.clientToken}`))
             this._socket.onopen = function (event) {
                 console.log("opened connection to " + socketUrl);
@@ -60,21 +70,22 @@ class HeavenSocket {
         })
     }
 
-    get isClosed() {
-        return this._socket.readyState === this._socket.CLOSED
-    }
-
     async sendMessage(msg) {
+        msg.splice(0, 200) // word limit 200
         if (this._socket == null) {
-            console.error('web socket didn\'t opened')
-            return
+            throw Error("WebSocket 沒有打開連接。(連接失敗?)")
         }
         if (currentPage !== 'chat') {
             console.warn('not in chat page, cannot send message')
+            return false
         }
         if (this.isClosed) {
             console.debug('socket closed unexpectedly, restarting...')
             await this.initialize()
+        }
+        const date = new Date()
+        if (date.getSeconds() - this._lastSent.getSeconds() < 1) {
+            throw Error("輸入速度頻繁，請等一秒後再試。")
         }
         const data = {
             type: 'BrowserMessage',
@@ -84,6 +95,8 @@ class HeavenSocket {
             }
         }
         this._socket.send(JSON.stringify(data))
+        this._lastSent = date
+        return true
     }
 
     close() {
