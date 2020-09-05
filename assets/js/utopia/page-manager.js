@@ -8,7 +8,7 @@ let currentPage = null
 const addPage = (pageId, locate, options = {}) => {
     const defaultOptions = {
         loadScript: false,
-        autoStopLoading: false
+        autoStopLoading: true
     }
     const option = {...defaultOptions, ...options}
     pageMap[pageId] = {locate, option}
