@@ -72,4 +72,13 @@
         cursor: url(https://cur.cursors-4u.net/nature/nat-11/nat1022.cur), auto !important;
     }
 </style>
+<script>
+    $('assests/img/loading.gif').one('load', function() {
+        $('#spinner').remove();
+    }).each(function() {
+        if(this.complete) {
+            $(this).trigger('load');
+        }
+    });
+</script>
 </html>
