@@ -34,8 +34,13 @@
         }
     </style>
     <link href="assets/carousel.css" rel="stylesheet">
+    <link href="assets/loader.css" rel="stylesheet">
 </head>
 <body>
+<div id="loader"></div>
+<div id="content">
+    <h1>WELCOME TO MY WEBSITE</h1>
+</div>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="#">
@@ -241,6 +246,31 @@
         <p>&copy; Copyright © 2020 CloudHeaven Easonchu777. All rights reserved.</p>
     </footer>
 </main>
+<script>
+
+    var loader;
+
+    function loadNow(opacity) {
+        if (opacity <= 0) {
+            displayContent();
+        } else {
+            loader.style.opacity = opacity;
+            window.setTimeout(function() {
+                loadNow(opacity - 0.05);
+            }, 50);
+        }
+    }
+
+    function displayContent() {
+        loader.style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        loader = document.getElementById('loader');
+        loadNow(1);
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 </html>
