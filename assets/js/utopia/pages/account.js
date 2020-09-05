@@ -12,7 +12,6 @@ getUser().then(({res, xhr})=>{
 
     $('#check-self-btn').one('click', (e) => {
         e.preventDefault()
-        console.debug(res.uuid)
         userPage(res.uuid)
     })
     $("#save-self").on('click', (e) => {

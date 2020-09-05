@@ -36,14 +36,12 @@ class HeavenSocket {
             this._socket = new WebSocket(this._url.concat(`?client=${sessionManager.token.clientToken}`))
             this._socket.onopen = function (event) {
                 console.log("opened connection to " + socketUrl);
-                res(event.data)
+                res(event)
             };
             this._socket.onclose = function (event) {
-                console.log("closed connection from " + socketUrl);
+                console.log(`closed connection from ${socketUrl}, reason ${event.reason}`);
             };
             this._socket.onmessage = function (event) {
-                console.debug('receive socket message: ')
-                console.debug(event.data)
                 const data = JSON.parse(event.data)
                 switch (data.Type) {
                     case 0:
