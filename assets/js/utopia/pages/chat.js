@@ -6,7 +6,7 @@ const input = $("#chat-input")
 
 validate(sessionManager.token).then(({res, xhr}) => {
     if (xhr.status === 200) {
-        $('#chat-header').innerHTML = `以 ${res.user.userName} 的身份聊天。`
+        $('#chat-header').innerText = `以 ${res.user.userName} 的身份聊天。`
         input.prop('disabled', false)
     } else {
         console.warn(res.response)
