@@ -70,8 +70,8 @@ class HeavenSocket {
         })
     }
 
-    async sendMessage(msg) {
-        msg.splice(0, 200) // word limit 200
+    async sendMessage(input) {
+        const msg = input.split('').slice(0, 200).join('')
         if (this._socket == null) {
             throw Error("WebSocket 沒有打開連接。(連接失敗?)")
         }
