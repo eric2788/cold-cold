@@ -64,7 +64,9 @@ if (sessionManager.token === undefined) {
                 }
                 ele.addEventListener('click', () => {
                     setBarLoading(true)
-                    changePage(id).catch(alert).finally(() => setBarLoading(false))
+                    changePage(id).catch(alert).finally(() => {
+                        if (isPageAutoStopLoading(id)) setBarLoading(false)
+                    })
                 })
             })
 
@@ -88,16 +90,16 @@ if (sessionManager.token === undefined) {
     }).finally(mdui.mutation)
 }
 
-addPage('news', './assets/pages/news.html', true)
+addPage('news', './assets/pages/news.html', {loadScript: true, autoStopLoading: false})
 addPage('about', './assets/pages/about.html')
 addPage('rule', './assets/pages/rules.html')
 addPage('intro', './assets/pages/intro.html')
-addPage('chat', './assets/pages/chat.html', true)
-addPage('player-list', './assets/pages/player-list.html', true)
-addPage('account', './assets/pages/account.html', true)
-addPage('player', './assets/pages/player.html', true)
-addPage('badge', './assets/pages/badge.html', true)
-addPage('player-setting', './assets/pages/player-setting.html', true)
+addPage('chat', './assets/pages/chat.html', {loadScript: true})
+addPage('player-list', './assets/pages/player-list.html', {loadScript: true, autoStopLoading: false})
+addPage('account', './assets/pages/account.html', {loadScript: true})
+addPage('player', './assets/pages/player.html', {loadScript: true})
+addPage('badge', './assets/pages/badge.html', {loadScript: true})
+addPage('player-setting', './assets/pages/player-setting.html', {loadScript: true})
 
 function userPage(uuid) {
     cache.uuid = uuid
@@ -202,13 +204,14 @@ function unlockOverlay(){
 
 function setBarLoading(loading) {
     const bar = $('.mdui-appbar')
+    const progress = bar.find('.mdui-progress')
     if (loading) {
         const loadBar = `<div class="mdui-progress">
                  <div class="mdui-progress-indeterminate"></div>
             </div>`
-        bar.append(loadBar)
+        if (progress.length === 0) bar.append(loadBar)
     } else {
-        bar.find('.mdui-progress').remove()
+        progress.remove()
     }
     bar.mutation()
 }

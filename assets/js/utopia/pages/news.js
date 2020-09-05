@@ -3,10 +3,8 @@
 console.log('news.js loaded')
 
 const perLoadCount = 10
-setBarLoading(true)
 fetch('./settings/news.json').then(r => r.json()).then(json => {
     let times = 0
-
     const btn = $('#news-load-btn')
 
     function loadMore() {
