@@ -17,7 +17,7 @@ class HeavenSocket {
         this._url = url
     }
 
-    _lastSent = new Date()
+    _lastSent = Date.now()
 
     get isClosed() {
         return this._socket?.readyState === WebSocket.CLOSED
@@ -83,8 +83,8 @@ class HeavenSocket {
             console.debug('socket closed unexpectedly, restarting...')
             await this.initialize()
         }
-        const date = new Date()
-        if (date.getSeconds() - this._lastSent.getSeconds() < 1) {
+        const date = Date.now()
+        if (date - this._lastSent < 1000) {
             throw Error("輸入速度頻繁，請等一秒後再試。")
         }
         const data = {

@@ -4,9 +4,18 @@ console.log('chat.js loaded')
 
 const input = $("#chat-input")
 
+validate(sessionManager.token).then(({res, xhr}) => {
+    if (xhr.status === 200) {
+        $('#chat-header').innerHTML = `以 ${res.user.userName} 的身份聊天。`
+        input.prop('disabled', false)
+    } else {
+        console.warn(res.response)
+    }
+}).catch(console.error).finally(mdui.mutation)
+
 input.off('keydown')
 input.on('keydown', e => {
-    if (e.key === 'Enter'){
+    if (e.key === 'Enter') {
         if (!e.target.value) {
             console.debug('empty string, skipped')
             return

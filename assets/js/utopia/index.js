@@ -2,7 +2,8 @@
 
 const cache = {
     uuid: undefined,
-    badge: undefined
+    badge: undefined,
+    username: undefined
 }
 
 async function checkIfAdmin(){
@@ -30,10 +31,12 @@ if (sessionManager.token === undefined) {
     document.location.href = homeUrl.concat('login.html')
 } else {
     validate(sessionManager.token).then(({res, xhr})=>{
-        if (xhr.status === 200){
+        if (xhr.status === 200) {
             sessionManager.token = res.token
 
-            if (res.user.admin){
+            $('#welcome-text').innerText = `歡迎, ${res.user.userName}`
+
+            if (res.user.admin) {
                 console.debug('user is admin')
                 const node = `
                     <a class="mdui-list-item mdui-ripple" id="badge">
@@ -71,14 +74,14 @@ if (sessionManager.token === undefined) {
             console.warn(xhr)
         }
     }).catch(err => {
-        if (err.response){
+        if (err.response) {
             console.warn(err.response)
-        }else{
+        } else {
             console.error(err)
             mdui.snackbar(err)
         }
         document.location.href = homeUrl.concat('login.html')
-    })
+    }).finally(mdui.mutation)
 }
 
 addPage('news', './assets/pages/news.html', true)
