@@ -4,14 +4,17 @@ console.log('chat.js loaded')
 
 const input = $("#chat-input")
 
+lockOverlay()
 validate(sessionManager.token).then(({res, xhr}) => {
     if (xhr.status === 200) {
         $('#chat-header').innerText = `以 ${res.user.userName} 的身份聊天。`
-        input.prop('disabled', false)
     } else {
         console.warn(res.response)
     }
-}).catch(console.error).finally(mdui.mutation)
+}).catch(console.error).finally(() => {
+    mdui.mutation()
+    unlockOverlay()
+})
 
 input.off('keydown')
 input.on('keydown', e => {
