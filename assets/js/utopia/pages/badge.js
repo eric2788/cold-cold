@@ -148,16 +148,20 @@ function updateImg(src){
 
 deleteBtn.on('click', () => {
     const id = $('#badge-id')[0].value
-    if (badgeSettings.editMode !== 'edit'){
+    if (badgeSettings.editMode !== 'edit') {
         mdui.snackbar('ERROR: not in edit mode')
         return
     }
-    if (!id){
+    if (!id) {
         mdui.snackbar('無效的 badgeId')
         return
     }
+    saveBtn.prop('disabled', true)
     setLoading(deleteBtn, true)
-    deleteBadge(id).then(handleSuccess).catch(handleErrorAlert).finally(() => setLoading(deleteBtn, false))
+    deleteBadge(id).then(handleSuccess).catch(handleErrorAlert).finally(() => {
+        saveBtn.prop('disabled', false)
+        setLoading(deleteBtn, false)
+    })
 })
 
 saveBtn.on('click', () => {
@@ -177,20 +181,23 @@ saveBtn.on('click', () => {
             mdui.snackbar('無效的 badgeId')
             return
         }
-        setLoading(saveBtn, true)
         promise = updateBadge(id, {
             badgeId: id,
             badgeName: name,
             badgeLink: link
         })
-    }else{
-        setLoading(saveBtn, true)
+    } else {
         promise = createBadge({
             badgeName: name,
             badgeLink: link
         })
     }
-    promise.then(handleSuccess).catch(handleErrorAlert).finally(() => setLoading(saveBtn, false))
+    deleteBtn.prop('disabled', true)
+    setLoading(saveBtn, true)
+    promise.then(handleSuccess).catch(handleErrorAlert).finally(() => {
+        deleteBtn.prop('disabled', false)
+        setLoading(saveBtn, false)
+    })
 })
 
 function handleSuccess({res, xhr}){

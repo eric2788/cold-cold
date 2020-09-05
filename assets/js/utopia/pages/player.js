@@ -9,11 +9,11 @@ getUser(cache.uuid || undefined).then(({res, xhr})=>{
     }
     $('#body-img')[0].src = `https://minotar.net/armor/body/${res.account.uuid}`
     $('#username')[0].value = res.account.userName
-    $('#nickname')[0].value = res.account.nickName
+    $('#nickname')[0].value = res.account.nickName || '無'
     const online = $('#online')[0]
     online.value = getStatusNode(socketData.online.includes(res.account.uuid))
     online.uuid = res.account.uuid
-    $('#status')[0].value = res.account.status
+    $('#status')[0].value = res.account.status || '無'
     $('#last-login')[0].value = new Date(res.cmi.lastLoginTime).toISOString()
     $('#play-time')[0].value = `${new Date(res.cmi.totalPlayTime).getHours()}小時`
     $('#join-time')[0].value = new Date(res.account.joinTime).toISOString().slice(0,10)
