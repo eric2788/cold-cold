@@ -3,27 +3,28 @@
 console.log('news.js loaded')
 
 const perLoadCount = 10
-fetch('./settings/news.json').then(r=>r.json()).then(json => {
+setBarLoading(true)
+fetch('./settings/news.json').then(r => r.json()).then(json => {
     let times = 0
 
     const btn = $('#news-load-btn')
+
     function loadMore() {
         const news = json.slice(perLoadCount * times, perLoadCount)
         appendList(news)
         times++
         if (json.length <= perLoadCount * times) {
-            btn.remove()
+            btn.css('display', 'none')
+        } else {
+            btn.css('display', 'block')
         }
         mdui.mutation()
     }
 
     loadMore()
-    const progress = $('.mdui-progress')
-    progress.remove()
-    progress.mutation()
 
     btn.on('click', loadMore)
-}).catch(handleErrorAlert)
+}).catch(handleErrorAlert).finally(() => setBarLoading(false))
 
 
 function appendList(news) {

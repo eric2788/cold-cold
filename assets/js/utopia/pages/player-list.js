@@ -2,12 +2,13 @@
 
 console.log('player-list.js loaded')
 
-getUsers().then(({res,xhr})=>{
+setBarLoading(true)
+getUsers().then(({res, xhr}) => {
     const playerCardList = $('#player-card-list')
-    if (xhr.status !== 200){
+    if (xhr.status !== 200) {
         console.warn('the http request statusCode is not OK(200)')
     }
-    for(const user of res){
+    for (const user of res) {
         const online = socketData.online.includes(user.uuid)
         const insert = `<div class="mdui-col">
             <div class="mdui-card mdui-ripple" id="card-${user.uuid}">
@@ -18,12 +19,11 @@ getUsers().then(({res,xhr})=>{
                 </div>
                 <div class="mdui-card-content">
                     ${user.admin ? '<p>此玩家是管理員</p>' : ''}
-                    <p>暱稱: ${user.nickName}</p>
+                    <p>暱稱: ${user.nickName || '無'}</p>
                 </div>
             </div>
         </div>`
-        $('.mdui-progress').remove()
         playerCardList.append(insert)
         $(`#card-${user.uuid}`).on('click', () => userPage(user.uuid))
     }
-}).catch(handleErrorAlert)
+}).catch(handleErrorAlert).finally(() => setBarLoading(false))

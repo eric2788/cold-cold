@@ -41,6 +41,7 @@ async function changePage(id, data = {}) {
     pageItem.find(`#${currentPage}`).addClass('mdui-list-item-active')
     console.debug(`added ${currentPage} as active`)
     heaven.replaceWith(res)
+    if (!drawer.isDesktop() && drawer.isOpen()) drawer.Close()
     if (pageMap[currentPage].haveScript) {
         await loadScript(currentPage, true)
         console.log('script loaded')

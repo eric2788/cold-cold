@@ -101,7 +101,6 @@ $('#save-btn').on('click', e => {
     }
     const data = {nickName, status, admin, badges}
     setLoading($(e.target), true)
-    alert(JSON.stringify(data))
     updateUser(data, uuidEditing).then(({res,xhr})=>{
         if (xhr.status === 204) {
             mdui.snackbar('更新成功')
@@ -115,7 +114,7 @@ $('#save-btn').on('click', e => {
 
 function resetForm(){
     $('#player-display')[0].reset()
-    $('#info-btn').prop('disabled', true)
+    infobtn.prop('disabled', true)
     $('#admin').prop('disabled', true)
-    $('#badge-list').prop('disabled', true)
+    badgeList.prop('disabled', true)
 }

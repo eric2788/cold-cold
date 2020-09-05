@@ -18,7 +18,7 @@ async function checkIfAdmin(){
         sessionManager.token = res.token
         if (window.location.href === homeUrl.concat('utopia.html')) return
         if (!res.user.admin){
-            alert('you are not admin!')
+            mdui.alert('you are not admin!')
             window.location.href = homeUrl.concat('utopia.html')
         }
     }).catch(err => {
@@ -27,6 +27,7 @@ async function checkIfAdmin(){
     })
 }
 
+setBarLoading(true)
 if (sessionManager.token === undefined) {
     document.location.href = homeUrl.concat('login.html')
 } else {
@@ -57,11 +58,14 @@ if (sessionManager.token === undefined) {
                     console.debug('no id within element, won\'t change pages');
                     return
                 }
-                if (ele.classList.contains('not-page')){
-                    console.debug(id+' has not-page, skipped');
+                if (ele.classList.contains('not-page')) {
+                    console.debug(id + ' has not-page, skipped');
                     return
                 }
-                ele.addEventListener('click', () => changePage(id).catch(console.error))
+                ele.addEventListener('click', () => {
+                    setBarLoading(true)
+                    changePage(id).catch(alert).finally(() => setBarLoading(false))
+                })
             })
 
             updateServerCount()
@@ -117,11 +121,10 @@ $("#change-color").children('button').each((_, ele) => {
 
 function handleErrorAlert(err) {
     if (err.response){
-        console.warn(err.response)
         const res = JSON.parse(err.response)
         let data
         if (res.error){
-            if (res.errorMessage === 'Invalid token'){
+            if (res.error === 'ForbiddenOperationException' || res.error === 'Invalid Session') {
                 unlockOverlay()
                 mdui.dialog({
                     title: '無效的 session Token',
@@ -161,12 +164,8 @@ $("#logout-Btn").one('click', (_) => {
     const token = sessionManager.token
     if (token === undefined){
         console.warn('unknown token, back to login')
-        window.location.href = homeUrl.concat('/login.html')
+        window.location.href = homeUrl.concat('login.html')
         return
-    }
-    const logoutBtn = $("#logout-btn")
-    if (isLoading(logoutBtn)) {
-        return;
     }
     logout(token)
 })
@@ -176,9 +175,7 @@ function logout(token) {
     signOut(token).then(({_, xhr}) => {
         console.debug(`status response: ${xhr.status}`)
         console.debug('logout successful')
-    }).catch(xhr => {
-        console.error(xhr)
-    }).finally(() => {
+    }).catch(console.error).finally(() => {
         unlockOverlay()
         sessionManager.remove()
         window.location.href = homeUrl.concat('login.html')
@@ -203,3 +200,15 @@ function unlockOverlay(){
     mdui.mutation()
 }
 
+function setBarLoading(loading) {
+    const bar = $('.mdui-appbar')
+    if (loading) {
+        const loadBar = `<div class="mdui-progress">
+                 <div class="mdui-progress-indeterminate"></div>
+            </div>`
+        bar.append(loadBar)
+    } else {
+        bar.find('.mdui-progress').remove()
+    }
+    bar.mutation()
+}
