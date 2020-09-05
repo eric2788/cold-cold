@@ -5,8 +5,13 @@ const changeOption = new Map()
 
 let currentPage = null
 
-const addPage = (pageId, locate, haveScript = false) => {
-    pageMap[pageId] = { locate, haveScript }
+const addPage = (pageId, locate, options = {}) => {
+    const defaultOptions = {
+        loadScript: false,
+        autoStopLoading: false
+    }
+    const option = {...defaultOptions, ...options}
+    pageMap[pageId] = {locate, option}
 }
 
 const onPageChange = (pageId, func) => {
@@ -28,12 +33,16 @@ const renderPage = async (pageId) => {
     return await fetch(locate).then(res => res.text())
 }
 
+function isPageAutoStopLoading(page) {
+    return pageMap[page].option.autoStopLoading
+}
+
 async function changePage(id, data = {}) {
     const heaven = $("#heaven")
     const res = await renderPage(id, true)
     console.debug('changing pages ' + id)
     let pageItem = $(`.mdui-list`)
-    if(currentPage) {
+    if (currentPage) {
         pageItem.find(`#${currentPage}`).removeClass('mdui-list-item-active')
         console.debug(`removed ${currentPage} as active`)
     }
@@ -41,8 +50,8 @@ async function changePage(id, data = {}) {
     pageItem.find(`#${currentPage}`).addClass('mdui-list-item-active')
     console.debug(`added ${currentPage} as active`)
     heaven.replaceWith(res)
-    if (!drawer.isDesktop() && drawer.isOpen()) drawer.Close()
-    if (pageMap[currentPage].haveScript) {
+    if (!drawer.isDesktop() && drawer.isOpen()) drawer.close()
+    if (pageMap[currentPage].option.loadScript) {
         await loadScript(currentPage, true)
         console.log('script loaded')
     }

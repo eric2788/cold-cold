@@ -2,7 +2,6 @@
 
 console.log('player-list.js loaded')
 
-setBarLoading(true)
 getUsers().then(({res, xhr}) => {
     const playerCardList = $('#player-card-list')
     if (xhr.status !== 200) {
