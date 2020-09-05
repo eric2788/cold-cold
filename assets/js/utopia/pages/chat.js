@@ -22,7 +22,7 @@ input.on('keydown', e => {
                 field.addClass('mdui-textfield-invalid')
             }
             error[0].innerHTML = err
-        })
+        }).finally(mdui.mutation)
 
     }
 })
