@@ -24,7 +24,7 @@ class HeavenSocket {
     }
 
     start() {
-        this.initialize().catch(mdui.alert)
+        this.initialize().catch(mdui.snackbar)
     }
 
     async initialize() {
@@ -32,7 +32,6 @@ class HeavenSocket {
             console.error('Token is null, cannot open websocket')
             return
         }
-        const start = this.start
         return new Promise((res, rej) => {
             if (this._socket?.readyState === WebSocket.OPEN) {
                 console.log('socket already opened, no need to initialize')
@@ -47,7 +46,7 @@ class HeavenSocket {
                 console.log(`closed connection from ${socketUrl}, reason ${event.reason}`);
                 console.log('restarting websocket...')
                 mdui.snackbar('Socket 連接意外關閉，正在重啟...')
-                setTimeout(start, 1000)
+                setTimeout(webSocket.start, 1000)
             };
             this._socket.onmessage = function (event) {
                 const data = JSON.parse(event.data)

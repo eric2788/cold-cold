@@ -76,6 +76,7 @@ if (sessionManager.token === undefined) {
             sessionManager.remove()
         }
     }).catch(err => {
+        alert(err)
         if (err.response) {
             console.warn(err.response)
         } else {
