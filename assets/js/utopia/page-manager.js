@@ -59,13 +59,20 @@ function changePage(page, options = {}) {
     const defaultOption = {
         callback: (res, data) => {
         },
-        data: {}
+        data: {},
+        replace: false
     }
     const option = {...defaultOption, ...options}
     const state = {page, data: option.data}
     setBarLoading(true)
     _switchPage(page, option)
-        .then(() => window.history.pushState(state, page, `${page}.html`))
+        .then(() => {
+            if (option.replace) {
+                window.history.replaceState(state, page, `${page}.html`)
+            } else {
+                window.history.pushState(state, page, `${page}.html`)
+            }
+        })
         .catch(mdui.alert)
         .finally(() => {
             if (isPageAutoStopLoading(page)) setBarLoading(false)
