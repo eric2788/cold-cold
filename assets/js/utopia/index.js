@@ -67,7 +67,7 @@ if (sessionManager.token === undefined) {
 
             updateServerCount()
 
-            return changePage('news')
+            return changePage('news', {replace: true})
         }else{
             alert(res)
             alert(xhr)
