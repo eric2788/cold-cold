@@ -6,18 +6,18 @@ const cache = {
     username: undefined
 }
 
-async function checkIfAdmin(){
+async function checkIfAdmin() {
     if (!sessionManager.token) {
         window.location.href = homeUrl.concat('login.html')
     }
-    await validate(sessionManager.token).then(({res,xhr})=>{
-        if (xhr.status !== 200){
+    await validate(sessionManager.token).then(({res, xhr}) => {
+        if (xhr.status !== 200) {
             window.location.href = homeUrl.concat('login.html')
             return
         }
         sessionManager.token = res.token
         if (window.location.href === homeUrl.concat('utopia.html')) return
-        if (!res.user.admin){
+        if (!res.user.admin) {
             mdui.alert('you are not admin!')
             window.location.href = homeUrl.concat('utopia.html')
         }
@@ -31,7 +31,7 @@ setBarLoading(true)
 if (sessionManager.token === undefined) {
     document.location.href = homeUrl.concat('login.html')
 } else {
-    validate(sessionManager.token).then(({res, xhr})=>{
+    validate(sessionManager.token).then(({res, xhr}) => {
         if (xhr.status === 200) {
             sessionManager.token = res.token
             $('#welcome-text')[0].innerText = `歡迎, ${res.user.userName}`
@@ -66,8 +66,14 @@ if (sessionManager.token === undefined) {
 
             updateServerCount()
 
-            return changePage('news', {replace: true})
-        }else{
+            return changePage('news',
+                {
+                    replace: true,
+                    data: {
+                        ignoreLoading: true
+                    }
+                })
+        } else {
             alert(res)
             alert(xhr)
             console.warn(res)
@@ -118,10 +124,10 @@ $("#change-color").children('button').each((_, ele) => {
 })
 
 function handleErrorAlert(err) {
-    if (err.response){
+    if (err.response) {
         const res = JSON.parse(err.response)
         let data
-        if (res.error){
+        if (res.error) {
             if (res.error === 'ForbiddenOperationException' || res.error === 'Invalid Session') {
                 unlockOverlay()
                 mdui.dialog({
@@ -140,19 +146,19 @@ function handleErrorAlert(err) {
                 return
             }
             data = res
-        }else{
+        } else {
             data = {
                 error: res.title,
                 errorMessage: JSON.stringify(res.errors)
             }
         }
-        if (drawer.isDesktop()){
+        if (drawer.isDesktop()) {
             const node = alertNode(data)
             $('#alert').replaceWith(node)
-        }else{
+        } else {
             mdui.alert(data.errorMessage, data.error)
         }
-    }else{
+    } else {
         console.warn(err)
         mdui.snackbar(err?.message || 'ERROR').open()
     }
@@ -160,7 +166,7 @@ function handleErrorAlert(err) {
 
 $("#logout-Btn").one('click', (_) => {
     const token = sessionManager.token
-    if (token === undefined){
+    if (token === undefined) {
         console.warn('unknown token, back to login')
         window.location.href = homeUrl.concat('login.html')
         return
@@ -189,7 +195,7 @@ function lockOverlay() {
 
 }
 
-function unlockOverlay(){
+function unlockOverlay() {
     $.hideOverlay(true)
     $('body').css({
         'pointer-events': 'auto'

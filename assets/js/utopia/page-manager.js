@@ -56,10 +56,6 @@ async function _switchPage(id, {data, callback}) {
 
 function changePage(page, options = {}) {
     if (currentPage === page) return
-    if (isBarLoading()) {
-        console.debug('switching page, do nothing.')
-        return
-    }
     const defaultOption = {
         callback: (res, data) => {
         },
@@ -68,13 +64,14 @@ function changePage(page, options = {}) {
     }
     const option = {...defaultOption, ...options}
     const state = {page, data: option.data}
+    if (!state.data.ignoreLoading && isBarLoading()) return
     setBarLoading(true)
     _switchPage(page, option)
         .then(() => {
             if (option.replace) {
-                window.history.replaceState(state, page, `${page}.html`)
+                window.history.replaceState(state, page, `utopia/${page}.html`)
             } else {
-                window.history.pushState(state, page, `${page}.html`)
+                window.history.pushState(state, page, `utopia/${page}.html`)
             }
         })
         .catch(mdui.alert)
