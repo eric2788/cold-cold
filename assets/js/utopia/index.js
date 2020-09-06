@@ -211,3 +211,7 @@ function setBarLoading(loading) {
     }
     bar.mutation()
 }
+
+function isBarLoading() {
+    return $('.mdui-appbar').find('.mdui-progress').length !== 0
+}
