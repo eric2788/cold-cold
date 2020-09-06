@@ -14,4 +14,17 @@ permalink: /404.html
 抱歉我們無法找到此頁面
 <a href="https://easonchu7.github.io">返回主頁</a>
 </body>
+
+<script>
+    const sec = 3 // 多少秒後返回主頁
+    const path = window.location.pathname
+    function callback() {
+        if (path.startWith('/utopia'){ //是內部
+            window.location.pathname = "/utopia.html"
+        } else {
+            window.history.back() //返回上一頁
+        }
+    }
+    setTimeout(callback, sec * 1000)
+</script>
 </html>
