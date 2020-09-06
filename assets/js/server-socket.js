@@ -46,7 +46,7 @@ class HeavenSocket {
                 console.log(`closed connection from ${socketUrl}, reason ${event.reason}`);
                 console.log('restarting websocket...')
                 mdui.snackbar('Socket 連接意外關閉，正在重啟...')
-                setTimeout(webSocket.start, 1000)
+                setTimeout(() => webSocket.initialize().catch(mdui.snackbar), 1000)
             };
             this._socket.onmessage = function (event) {
                 const data = JSON.parse(event.data)

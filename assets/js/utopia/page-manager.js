@@ -31,13 +31,7 @@ const renderPage = async (pageId) => {
 function isPageAutoStopLoading(page) {
     return pageMap[page].option.autoStopLoading
 }
-let locked = false
 async function _switchPage(id, {data, callback}) {
-    if (locked) {
-        console.debug('switching page, do nothing.')
-        return
-    }
-    locked = true
     const heaven = $("#heaven")
     const res = await renderPage(id, true)
     console.debug('changing pages ' + id)
@@ -57,11 +51,15 @@ async function _switchPage(id, {data, callback}) {
     }
     callback(res, data)
     mdui.mutation()
-    locked = false
     return res;
 }
 
 function changePage(page, options = {}) {
+    if (currentPage === page) return
+    if (isBarLoading()) {
+        console.debug('switching page, do nothing.')
+        return
+    }
     const defaultOption = {
         callback: (res, data) => {
         },
@@ -90,6 +88,7 @@ window.onpopstate = function (event) {
     const state = event.state
     const page = state?.page
     if (page) {
+        if (currentPage === page) return
         event.stopImmediatePropagation()
         event.preventDefault()
         setBarLoading(true)
