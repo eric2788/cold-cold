@@ -34,7 +34,6 @@ if (sessionManager.token === undefined) {
     validate(sessionManager.token).then(({res, xhr})=>{
         if (xhr.status === 200) {
             sessionManager.token = res.token
-
             $('#welcome-text')[0].innerText = `歡迎, ${res.user.userName}`
 
             if (res.user.admin) {
@@ -76,7 +75,6 @@ if (sessionManager.token === undefined) {
             sessionManager.remove()
         }
     }).catch(err => {
-        alert(err)
         if (err.response) {
             console.warn(err.response)
         } else {
