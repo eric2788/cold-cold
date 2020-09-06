@@ -78,6 +78,7 @@ if (sessionManager.token === undefined) {
             alert(xhr)
             console.warn(res)
             console.warn(xhr)
+            sessionManager.remove()
         }
     }).catch(err => {
         if (err.response) {
@@ -86,6 +87,7 @@ if (sessionManager.token === undefined) {
             console.error(err)
             mdui.snackbar(err)
         }
+        sessionManager.remove()
         document.location.href = homeUrl.concat('login.html')
     }).finally(mdui.mutation)
 }
