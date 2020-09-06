@@ -62,12 +62,7 @@ if (sessionManager.token === undefined) {
                     console.debug(id + ' has not-page, skipped');
                     return
                 }
-                ele.addEventListener('click', () => {
-                    setBarLoading(true)
-                    changePage(id).catch(alert).finally(() => {
-                        if (isPageAutoStopLoading(id)) setBarLoading(false)
-                    })
-                })
+                ele.addEventListener('click', () => changePage(id))
             })
 
             updateServerCount()
@@ -78,6 +73,7 @@ if (sessionManager.token === undefined) {
             alert(xhr)
             console.warn(res)
             console.warn(xhr)
+            sessionManager.remove()
         }
     }).catch(err => {
         if (err.response) {
@@ -86,6 +82,7 @@ if (sessionManager.token === undefined) {
             console.error(err)
             mdui.snackbar(err)
         }
+        sessionManager.remove()
         document.location.href = homeUrl.concat('login.html')
     }).finally(mdui.mutation)
 }
@@ -103,9 +100,9 @@ addPage('player-setting', './assets/pages/player-setting.html', {loadScript: tru
 
 function userPage(uuid) {
     cache.uuid = uuid
-    changePage('player')
-        .then(() => cache.uuid = undefined)
-        .catch(err => mdui.snackbar(err).open())
+    changePage('player', {
+        callback: () => cache.uuid = undefined
+    })
 }
 
 const drawer = new mdui.Drawer('#drawer', {swipe: true})
