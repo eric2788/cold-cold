@@ -64,15 +64,19 @@ function changePage(page, options = {}) {
     const option = {...defaultOption, ...options}
     const state = {page, data: option.data}
     setBarLoading(true)
-    _switchPage(page, option).then(() => window.history.pushState(state, page, `${page}.html`)).catch(mdui.alert).finally(() => {
-        if (isPageAutoStopLoading(page)) setBarLoading(false)
-    })
+    _switchPage(page, option)
+        .then(() => window.history.pushState(state, page, `${page}.html`))
+        .catch(mdui.alert)
+        .finally(() => {
+            if (isPageAutoStopLoading(page)) setBarLoading(false)
+        })
 }
 
 
 window.onpopstate = function (event) {
     const state = event.state
-    if (state?.page) {
+    const page = state?.page
+    if (page) {
         event.stopImmediatePropagation()
         event.preventDefault()
         setBarLoading(true)
