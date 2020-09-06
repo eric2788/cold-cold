@@ -1,0 +1,67 @@
+<div class="mdui-fab-wrapper" id="fab" mdui-fab="{trigger: 'hover'}">
+    <button class="mdui-fab mdui-ripple mdui-color-theme">
+        <i class="mdui-icon material-icons">brush</i>
+        <i class="mdui-icon mdui-fab-opened material-icons">border_color</i>
+    </button>
+    <div class="mdui-fab-dial" id="change-color">
+        <button id="pink" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="red" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="purple" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-purple"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="deep-purple" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-deep-purple"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="indigo" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-indigo"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="blue" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="light-blue" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-light-blue"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="cyan" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-cyan"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="teal" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-teal"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="green" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-green"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="light-green" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-light-green"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="lime" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-lime"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="yellow" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-yellow"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="amber" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-amber"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="orange" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="deep-orange" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-deep-orange"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="brown" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-brown"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="grey" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-grey"><i class="mdui-icon material-icons">brush</i>
+        </button>
+
+        <button id="blue-grey" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue-grey"><i class="mdui-icon material-icons">brush</i>
+        </button>
+        
+        <button id="white" class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-white"><i class="mdui-icon material-icons">brush</i>
+        </button>
+    </div>
+</div>
