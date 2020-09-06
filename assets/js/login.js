@@ -3,6 +3,7 @@
 if (sessionManager.token !== undefined) {
     validate(sessionManager.token).then(({res, xhr})=>{
         if (xhr.status === 200){
+            sessionManager.token = res.token
             document.location.href = homeUrl.concat('utopia.html')
         }else{
             console.warn(res)
