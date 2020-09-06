@@ -23,11 +23,16 @@ class HeavenSocket {
         return this._socket?.readyState === WebSocket.CLOSED
     }
 
+    start() {
+        this.initialize().catch(mdui.alert)
+    }
+
     async initialize() {
         if (sessionManager.token === undefined) {
             console.error('Token is null, cannot open websocket')
             return
         }
+        const start = this.start
         return new Promise((res, rej) => {
             if (this._socket?.readyState === WebSocket.OPEN) {
                 console.log('socket already opened, no need to initialize')
@@ -40,6 +45,9 @@ class HeavenSocket {
             };
             this._socket.onclose = function (event) {
                 console.log(`closed connection from ${socketUrl}, reason ${event.reason}`);
+                console.log('restarting websocket...')
+                mdui.snackbar('Socket 連接意外關閉，正在重啟...')
+                setTimeout(start, 1000)
             };
             this._socket.onmessage = function (event) {
                 const data = JSON.parse(event.data)
@@ -107,12 +115,12 @@ class HeavenSocket {
 }
 
 const webSocket = new HeavenSocket(socketUrl)
-webSocket.initialize().catch(console.error)
+webSocket.start()
 
 setInterval(() => {
     if (webSocket.isClosed){
         console.debug('socket closed unexpectedly, restarting...')
-        webSocket.initialize().catch(console.error)
+        webSocket.start()
     }
 }, 1000 * 60)
 

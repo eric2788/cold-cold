@@ -1,7 +1,6 @@
 'use strict';
 
 const pageMap = new WeakMap()
-const changeOption = new Map()
 
 let currentPage = null
 
@@ -12,10 +11,6 @@ const addPage = (pageId, locate, options = {}) => {
     }
     const option = {...defaultOptions, ...options}
     pageMap[pageId] = {locate, option}
-}
-
-const onPageChange = (pageId, func) => {
-    changeOption.set(pageId, func)
 }
 
 const removePage = (pageId) => {
@@ -37,7 +32,7 @@ function isPageAutoStopLoading(page) {
     return pageMap[page].option.autoStopLoading
 }
 
-async function changePage(id, data = {}) {
+async function _switchPage(id, {data, callback}) {
     const heaven = $("#heaven")
     const res = await renderPage(id, true)
     console.debug('changing pages ' + id)
@@ -50,20 +45,47 @@ async function changePage(id, data = {}) {
     pageItem.find(`#${currentPage}`).addClass('mdui-list-item-active')
     console.debug(`added ${currentPage} as active`)
     heaven.replaceWith(res)
-    window.history.pushState({dom: res, data}, id, `${currentPage}.html`)
     if (!drawer.isDesktop() && drawer.isOpen()) drawer.close()
     if (pageMap[currentPage].option.loadScript) {
         await loadScript(currentPage, true)
         console.log('script loaded')
     }
-    if (changeOption.has(id)) {
-        console.debug('pageChange action executed for ' + id)
-        const func = changeOption.get(id)
-        func(res, data)
-    }
+    callback(res, data)
     mdui.mutation()
     return res;
 }
+
+function changePage(page, options = {}) {
+    const defaultOption = {
+        callback: (res, data) => {
+        },
+        data: {}
+    }
+    const option = {...defaultOption, ...options}
+    const state = {page, data: option.data}
+    setBarLoading(true)
+    _switchPage(page, option).then(() => window.history.pushState(state, page, `${page}.html`)).catch(mdui.alert).finally(() => {
+        if (isPageAutoStopLoading(page)) setBarLoading(false)
+    })
+}
+
+
+window.onpopstate = function (event) {
+    const state = event.state
+    if (state?.page) {
+        event.stopImmediatePropagation()
+        event.preventDefault()
+        setBarLoading(true)
+        _switchPage(page, {
+            callback: (res, data) => {
+            },
+            data: state.data
+        }).catch(mdui.alert).finally(() => {
+            if (isPageAutoStopLoading(page)) setBarLoading(false)
+        })
+    }
+}
+
 
 const unloadScript = function (page) {
     $(`script`)
@@ -73,13 +95,13 @@ const unloadScript = function (page) {
         })
 }
 
-const loadScript = async function (page){
+const loadScript = async function (page) {
     const url = `./assets/js/utopia/pages/${page}.js`.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')
 
     const result = await fetch(url)
     const notExist = result.status === 404
 
-    if (notExist){
+    if (notExist) {
         console.debug(`script ${page}.js not exist, skipped`)
         return
     }
