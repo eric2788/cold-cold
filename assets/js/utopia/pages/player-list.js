@@ -9,7 +9,7 @@ getUsers().then(({res, xhr}) => {
     }
     for (const user of res) {
         const online = socketData.online.includes(user.uuid)
-        const insert = `<div class="mdui-col">
+        const insert = `<div class="mdui-col mdui-m-b-2">
             <div class="mdui-card mdui-ripple" id="card-${user.uuid}">
                 <div class="mdui-card-header">
                     <img alt="avatar" class="mdui-card-header-avatar" src="https://minotar.net/avatar/${user.uuid}/100">

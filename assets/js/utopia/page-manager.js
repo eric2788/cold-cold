@@ -31,8 +31,13 @@ const renderPage = async (pageId) => {
 function isPageAutoStopLoading(page) {
     return pageMap[page].option.autoStopLoading
 }
-
+let locked = false
 async function _switchPage(id, {data, callback}) {
+    if (locked) {
+        console.debug('switching page, do nothing.')
+        return
+    }
+    locked = true
     const heaven = $("#heaven")
     const res = await renderPage(id, true)
     console.debug('changing pages ' + id)
@@ -52,6 +57,7 @@ async function _switchPage(id, {data, callback}) {
     }
     callback(res, data)
     mdui.mutation()
+    locked = false
     return res;
 }
 
