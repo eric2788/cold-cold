@@ -25,7 +25,7 @@ const renderPage = async (pageId) => {
     }
     const locate = page.locate.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')
     console.debug('rendering pages ' + locate)
-    return await fetch(locate).then(res => res.text())
+    return await fetch(homeUrl.concat(locate)).then(res => res.text())
 }
 
 function isPageAutoStopLoading(page) {
@@ -109,9 +109,9 @@ const unloadScript = function (page) {
 }
 
 const loadScript = async function (page) {
-    const url = `./assets/js/utopia/pages/${page}.js`.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')
+    const url = `/assets/js/utopia/pages/${page}.js`.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')
 
-    const result = await fetch(url)
+    const result = await fetch(homeUrl.concat(url))
     const notExist = result.status === 404
 
     if (notExist) {
@@ -120,3 +120,7 @@ const loadScript = async function (page) {
     }
     eval(await result.text())
 }
+
+
+const jumpTo = (pathname) => window.location.pathname = pathname.concat('.html')
+

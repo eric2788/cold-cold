@@ -4,7 +4,7 @@ if (sessionManager.token !== undefined) {
     validate(sessionManager.token).then(({res, xhr})=>{
         if (xhr.status === 200){
             sessionManager.token = res.token
-            document.location.href = homeUrl.concat('utopia.html')
+            jumpTo('utopia')
         }else{
             console.warn(res)
             console.warn(xhr)
@@ -37,7 +37,7 @@ function submit(e) {
             return
         }
         sessionManager.token = res
-        document.location.href = homeUrl.concat('utopia.html')
+        jumpTo('utopia')
     }).catch(err => {
         if (err.response){
             console.warn(err.response)
