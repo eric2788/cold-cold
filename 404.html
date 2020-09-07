@@ -21,7 +21,7 @@ permalink: /404.html
     const sec = 3 // 多少秒後返回主頁
     const path = window.location.pathname
     function callback() {
-        if (path.startWith('/utopia'){ //是內部
+        if (path.startsWith('/utopia')){ //是內部
             window.location.pathname = "/utopia.html"
         } else {
             window.history.back() //返回上一頁
