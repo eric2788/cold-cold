@@ -114,3 +114,5 @@ const sessionManager = {
     },
     remove: () => window.sessionStorage.removeItem(TOKEN_KEY)
 }
+
+const jumpTo = (pathname) => window.location.pathname = pathname.concat('.html')

@@ -121,6 +121,3 @@ const loadScript = async function (page) {
     eval(await result.text())
 }
 
-
-const jumpTo = (pathname) => window.location.pathname = pathname.concat('.html')
-
