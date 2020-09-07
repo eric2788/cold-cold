@@ -69,9 +69,9 @@ function changePage(page, options = {}) {
     _switchPage(page, option)
         .then(() => {
             if (option.replace) {
-                window.history.replaceState(state, page, `utopia/${page}.html`)
+                window.history.replaceState(state, page, `/utopia/${page}.html`)
             } else {
-                window.history.pushState(state, page, `utopia/${page}.html`)
+                window.history.pushState(state, page, `/utopia/${page}.html`)
             }
         })
         .catch(mdui.alert)

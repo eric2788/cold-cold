@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Heaven - Unknown Page</title>
+</head>
+<body>
+<h3>抱歉，我們無法找到此頁面。</h3>
+<span>三秒後將自動跳回你之前所瀏覽的頁面。</span>
+<a href="javascript: window.history.back()">或按這裏立刻重新進行跳轉</a>
+</body>
+<script type="application/javascript">
+    console.log('reached 404 web page.')
+    const path = window.location.pathname
+    if (path.startsWith('/utopia')) {
+        window.location.pathname = '/utopia.html'
+    } else {
+        setTimeout(() => window.history.back(), 3000)
+    }
+</script>
+</html>
