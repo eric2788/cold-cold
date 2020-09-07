@@ -76,7 +76,7 @@ const isLoading = function (e) {
     return e.prop('disabled')
 }
 
-const homeUrl = window.location.origin.concat('/')
+const homeUrl = window.location.origin
 
 const changeTheme = (oldColor, color) => {
    const body =  $("body")

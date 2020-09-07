@@ -8,28 +8,32 @@ const cache = {
 
 async function checkIfAdmin() {
     if (!sessionManager.token) {
-        window.location.href = homeUrl.concat('login.html')
+        jumpTo('login')
     }
     await validate(sessionManager.token).then(({res, xhr}) => {
         if (xhr.status !== 200) {
-            window.location.href = homeUrl.concat('login.html')
+            alert(res)
+            alert(xhr)
+            console.warn(res)
+            console.warn(xhr)
+            sessionManager.remove()
             return
         }
         sessionManager.token = res.token
-        if (window.location.href === homeUrl.concat('utopia.html')) return
         if (!res.user.admin) {
             mdui.alert('you are not admin!')
-            window.location.href = homeUrl.concat('utopia.html')
+            jumpTo('utopia')
         }
     }).catch(err => {
         console.error(err)
-        window.location.href = homeUrl.concat('login.html')
+        sessionManager.remove()
+        jumpTo('login')
     })
 }
 
 setBarLoading(true)
 if (sessionManager.token === undefined) {
-    document.location.href = homeUrl.concat('login.html')
+    jumpTo('login')
 } else {
     validate(sessionManager.token).then(({res, xhr}) => {
         if (xhr.status === 200) {
@@ -88,20 +92,20 @@ if (sessionManager.token === undefined) {
             mdui.snackbar(err)
         }
         sessionManager.remove()
-        document.location.href = homeUrl.concat('login.html')
+        jumpTo('login')
     }).finally(mdui.mutation)
 }
 
-addPage('news', './assets/pages/news.html', {loadScript: true, autoStopLoading: false})
-addPage('about', './assets/pages/about.html')
-addPage('rule', './assets/pages/rules.html')
-addPage('intro', './assets/pages/intro.html')
-addPage('chat', './assets/pages/chat.html', {loadScript: true})
-addPage('player-list', './assets/pages/player-list.html', {loadScript: true, autoStopLoading: false})
-addPage('account', './assets/pages/account.html', {loadScript: true})
-addPage('player', './assets/pages/player.html', {loadScript: true})
-addPage('badge', './assets/pages/badge.html', {loadScript: true})
-addPage('player-setting', './assets/pages/player-setting.html', {loadScript: true})
+addPage('news', '/assets/pages/news.html', {loadScript: true, autoStopLoading: false})
+addPage('about', '/assets/pages/about.html')
+addPage('rule', '/assets/pages/rules.html')
+addPage('intro', '/assets/pages/intro.html')
+addPage('chat', '/assets/pages/chat.html', {loadScript: true})
+addPage('player-list', '/assets/pages/player-list.html', {loadScript: true, autoStopLoading: false})
+addPage('account', '/assets/pages/account.html', {loadScript: true})
+addPage('player', '/assets/pages/player.html', {loadScript: true})
+addPage('badge', '/assets/pages/badge.html', {loadScript: true})
+addPage('player-setting', '/assets/pages/player-setting.html', {loadScript: true})
 
 function userPage(uuid) {
     cache.uuid = uuid
@@ -168,7 +172,7 @@ $("#logout-Btn").one('click', (_) => {
     const token = sessionManager.token
     if (token === undefined) {
         console.warn('unknown token, back to login')
-        window.location.href = homeUrl.concat('login.html')
+        jumpTo('login')
         return
     }
     logout(token)
@@ -182,7 +186,7 @@ function logout(token) {
     }).catch(console.error).finally(() => {
         unlockOverlay()
         sessionManager.remove()
-        window.location.href = homeUrl.concat('login.html')
+        jumpTo('login')
     })
 }
 
