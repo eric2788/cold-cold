@@ -63,8 +63,7 @@ class HeavenSocket {
                         break;
                     case 2:
                         if (currentPage !== 'chat') return
-                        const msg = decodeURI(data.Data)
-                        appendChat(msg)
+                        appendChat(data.Data)
                         break;
                 }
             };
@@ -131,7 +130,7 @@ function appendChat(chat){
     }
     const node = `
               <li class="mdui-list-item">
-                 ${chat}
+                 ${decodeURI(chat)}
               </li>
             `
     const chatList = $('#chat-list')
