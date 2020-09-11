@@ -2,12 +2,39 @@
 
 console.log('player-list.js loaded')
 
-getUsers().then(({res, xhr}) => {
-    const playerCardList = $('#player-card-list')
-    if (xhr.status !== 200) {
-        console.warn('the http request statusCode is not OK(200)')
-    }
-    for (const user of res) {
+const playerCardList = $('#player-card-list')
+const btn = $('#users-load-btn')
+
+let page = 1
+
+function getCurrentTotal(){
+    return playerCardList.length
+}
+
+function getMore(){
+    getUsers(page).then(({res, xhr}) => {
+
+        if (xhr.status !== 200) {
+            console.warn('the http request statusCode is not OK(200)')
+        }
+
+        appendList(res.list)
+        page++
+        if (getCurrentTotal() <= res.total){
+            btn.css('display', 'none')
+        }else{
+            btn.css('display', 'block')
+        }
+
+    }).catch(handleErrorAlert).finally(() => setBarLoading(false))
+}
+
+getMore()
+
+btn.on('click', getMore)
+
+function appendList(list) {
+    for (const user of list) {
         const online = socketData.online.includes(user.uuid)
         const insert = `<div class="mdui-col mdui-m-b-2">
             <div class="mdui-card mdui-ripple" id="card-${user.uuid}">
@@ -25,4 +52,4 @@ getUsers().then(({res, xhr}) => {
         playerCardList.append(insert)
         $(`#card-${user.uuid}`).on('click', () => userPage(user.uuid))
     }
-}).catch(handleErrorAlert).finally(() => setBarLoading(false))
+}
