@@ -63,7 +63,7 @@ class HeavenSocket {
                         break;
                     case 2:
                         if (currentPage !== 'chat') return
-                        const msg = decodeURI(data.Data)
+                        const msg = decodeURIComponent(data.Data)
                         appendChat(msg)
                         break;
                 }
@@ -77,7 +77,7 @@ class HeavenSocket {
     }
 
     async sendMessage(input) {
-        const msg = encodeURI(input.split('').slice(0, 200).join(''))
+        const msg = encodeURI(unescape(input.split('').slice(0, 200).join('')))
         if (this._socket == null) {
             throw Error("WebSocket 沒有打開連接。(連接失敗?)")
         }
