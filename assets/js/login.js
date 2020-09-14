@@ -60,7 +60,7 @@ loginBtn.on('click', submit);
 $("#password-input").on('keydown', submit)
 
 function openTerms(){
-    fetch('./settings/terms.json'.concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')).then(r => r.json()).then(json => {
+    fetch(homeUrl.concat('/settings/terms.json').concat(!pageSettings.enableCaching ? `?updated=${Date.now()}` : '')).then(r => r.json()).then(json => {
         const line = json.termsLogin.map(s => `<p>${s}</p>`).join('\n')
         mdui.dialog({
             title: '登入此網站則代表你同意以下條款',

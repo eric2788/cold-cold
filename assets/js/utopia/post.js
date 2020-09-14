@@ -7,7 +7,7 @@ console.log(id);
 init(id);
 
 function init(id){
-    fetch(`posts/${id}.html`).then(r => r.text()).then(r => {
+    fetch(homeUrl.concat(`/posts/${id}.html`)).then(r => r.text()).then(r => {
         const parser = new DOMParser();
         return parser.parseFromString(r, "text/html");
     }).then(doc => {
