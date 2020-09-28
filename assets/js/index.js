@@ -8,7 +8,7 @@ const pageSettings = {
     enableCaching: false
 }
 
-const api = "https://cloudheavenapi.iw.gy"
+const api = "http://localhost:8080"
 
 $.ajaxSetup({
     global: true,
